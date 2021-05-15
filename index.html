@@ -9,6 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Omega Smith and Ricardo David Barragan Martinez" />
 
 
 <title>Used cars catalog analysis</title>
@@ -164,6 +165,8 @@ pre code {
 
 
 <h1 class="title toc-ignore">Used cars catalog analysis</h1>
+<h4 class="author">Omega Smith and Ricardo David Barragan Martinez</h4>
+<h4 class="date">5/14/2021</h4>
 
 </div>
 
@@ -197,36 +200,36 @@ library(tidyr) #to transform the df(e.g. unite)</code></pre>
 <pre class="r"><code>glimpse(cars)</code></pre>
 <pre><code>## Rows: 38,531
 ## Columns: 30
-## $ manufacturer_name &lt;chr&gt; &quot;Subaru&quot;, &quot;Subaru&quot;, &quot;Subaru&quot;, …
-## $ model_name        &lt;chr&gt; &quot;Outback&quot;, &quot;Outback&quot;, &quot;Foreste…
-## $ transmission      &lt;chr&gt; &quot;automatic&quot;, &quot;automatic&quot;, &quot;aut…
-## $ color             &lt;chr&gt; &quot;silver&quot;, &quot;blue&quot;, &quot;red&quot;, &quot;blue…
-## $ odometer_value    &lt;int&gt; 190000, 290000, 402000, 10000,…
-## $ year_produced     &lt;int&gt; 2010, 2002, 2001, 1999, 2001, …
-## $ engine_fuel       &lt;chr&gt; &quot;gasoline&quot;, &quot;gasoline&quot;, &quot;gasol…
-## $ engine_has_gas    &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fa…
-## $ engine_type       &lt;chr&gt; &quot;gasoline&quot;, &quot;gasoline&quot;, &quot;gasol…
-## $ engine_capacity   &lt;dbl&gt; 2.5, 3.0, 2.5, 3.0, 2.5, 2.5, …
-## $ body_type         &lt;chr&gt; &quot;universal&quot;, &quot;universal&quot;, &quot;suv…
-## $ has_warranty      &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fa…
-## $ state             &lt;chr&gt; &quot;owned&quot;, &quot;owned&quot;, &quot;owned&quot;, &quot;ow…
-## $ drivetrain        &lt;chr&gt; &quot;all&quot;, &quot;all&quot;, &quot;all&quot;, &quot;all&quot;, &quot;a…
-## $ price_usd         &lt;dbl&gt; 10900.00, 5000.00, 2800.00, 99…
-## $ is_exchangeable   &lt;chr&gt; &quot;False&quot;, &quot;True&quot;, &quot;True&quot;, &quot;True…
-## $ location_region   &lt;chr&gt; &quot;Минская обл.&quot;, &quot;Минская обл.&quot;…
-## $ number_of_photos  &lt;int&gt; 9, 12, 4, 9, 14, 20, 8, 7, 17,…
-## $ up_counter        &lt;int&gt; 13, 54, 72, 42, 7, 56, 147, 29…
-## $ feature_0         &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Tr…
-## $ feature_1         &lt;chr&gt; &quot;True&quot;, &quot;True&quot;, &quot;True&quot;, &quot;False…
-## $ feature_2         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fal…
-## $ feature_3         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fal…
-## $ feature_4         &lt;chr&gt; &quot;False&quot;, &quot;True&quot;, &quot;False&quot;, &quot;Fal…
-## $ feature_5         &lt;chr&gt; &quot;True&quot;, &quot;True&quot;, &quot;False&quot;, &quot;Fals…
-## $ feature_6         &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fa…
-## $ feature_7         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fal…
-## $ feature_8         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;True&quot;, &quot;Fals…
-## $ feature_9         &lt;chr&gt; &quot;True&quot;, &quot;True&quot;, &quot;True&quot;, &quot;False…
-## $ duration_listed   &lt;int&gt; 16, 83, 151, 86, 7, 67, 307, 7…</code></pre>
+## $ manufacturer_name &lt;chr&gt; &quot;Subaru&quot;, &quot;Subaru&quot;, &quot;Subaru&quot;, &quot;Subaru&quot;, &quot;S…
+## $ model_name        &lt;chr&gt; &quot;Outback&quot;, &quot;Outback&quot;, &quot;Forester&quot;, &quot;Impreza…
+## $ transmission      &lt;chr&gt; &quot;automatic&quot;, &quot;automatic&quot;, &quot;automatic&quot;, &quot;me…
+## $ color             &lt;chr&gt; &quot;silver&quot;, &quot;blue&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;black&quot;, …
+## $ odometer_value    &lt;int&gt; 190000, 290000, 402000, 10000, 280000, 132…
+## $ year_produced     &lt;int&gt; 2010, 2002, 2001, 1999, 2001, 2011, 1998, …
+## $ engine_fuel       &lt;chr&gt; &quot;gasoline&quot;, &quot;gasoline&quot;, &quot;gasoline&quot;, &quot;gasol…
+## $ engine_has_gas    &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False…
+## $ engine_type       &lt;chr&gt; &quot;gasoline&quot;, &quot;gasoline&quot;, &quot;gasoline&quot;, &quot;gasol…
+## $ engine_capacity   &lt;dbl&gt; 2.5, 3.0, 2.5, 3.0, 2.5, 2.5, 2.5, 2.5, 2.…
+## $ body_type         &lt;chr&gt; &quot;universal&quot;, &quot;universal&quot;, &quot;suv&quot;, &quot;sedan&quot;, …
+## $ has_warranty      &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False…
+## $ state             &lt;chr&gt; &quot;owned&quot;, &quot;owned&quot;, &quot;owned&quot;, &quot;owned&quot;, &quot;owned…
+## $ drivetrain        &lt;chr&gt; &quot;all&quot;, &quot;all&quot;, &quot;all&quot;, &quot;all&quot;, &quot;all&quot;, &quot;all&quot;, …
+## $ price_usd         &lt;dbl&gt; 10900.00, 5000.00, 2800.00, 9999.00, 2134.…
+## $ is_exchangeable   &lt;chr&gt; &quot;False&quot;, &quot;True&quot;, &quot;True&quot;, &quot;True&quot;, &quot;True&quot;, &quot;…
+## $ location_region   &lt;chr&gt; &quot;Минская обл.&quot;, &quot;Минская обл.&quot;, &quot;Минская о…
+## $ number_of_photos  &lt;int&gt; 9, 12, 4, 9, 14, 20, 8, 7, 17, 8, 14, 18, …
+## $ up_counter        &lt;int&gt; 13, 54, 72, 42, 7, 56, 147, 29, 33, 11, 6,…
+## $ feature_0         &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;True&quot;, &quot;False&quot;…
+## $ feature_1         &lt;chr&gt; &quot;True&quot;, &quot;True&quot;, &quot;True&quot;, &quot;False&quot;, &quot;True&quot;, &quot;…
+## $ feature_2         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False&quot;…
+## $ feature_3         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;True&quot;,…
+## $ feature_4         &lt;chr&gt; &quot;False&quot;, &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;True&quot;,…
+## $ feature_5         &lt;chr&gt; &quot;True&quot;, &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False&quot;,…
+## $ feature_6         &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False…
+## $ feature_7         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;False&quot;…
+## $ feature_8         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;True&quot;, &quot;False&quot;, &quot;False&quot;,…
+## $ feature_9         &lt;chr&gt; &quot;True&quot;, &quot;True&quot;, &quot;True&quot;, &quot;False&quot;, &quot;True&quot;, &quot;…
+## $ duration_listed   &lt;int&gt; 16, 83, 151, 86, 7, 67, 307, 73, 87, 43, 1…</code></pre>
 <p>In order to have only one name of the cars, the columns “manufacturer_name” and “model_name” were combined into cars to have a better an unique representation of the cars.</p>
 <pre class="r"><code>cars &lt;- cars %&gt;% 
   unite(car, c(&quot;manufacturer_name&quot;, &quot;model_name&quot;))</code></pre>
@@ -666,154 +669,119 @@ library(tidyr) #to transform the df(e.g. unite)</code></pre>
 ## Call: KMO(r = cars_for_factor_analysis)
 ## Overall MSA =  0.8
 ## MSA for each item = 
-##     transmission            color   odometer_value 
-##             0.93             0.73             0.91 
-##    year_produced      engine_fuel   engine_has_gas 
-##             0.84             0.44             0.07 
-##      engine_type  engine_capacity        body_type 
-##             0.44             0.77             0.76 
-##     has_warranty            state       drivetrain 
-##             0.62             0.61             0.87 
-##        price_usd  is_exchangeable  location_region 
-##             0.87             0.61             0.92 
-## number_of_photos       up_counter        feature_0 
-##             0.90             0.51             0.79 
-##        feature_1        feature_2        feature_3 
-##             0.83             0.95             0.96 
-##        feature_4        feature_5        feature_6 
-##             0.93             0.96             0.92 
-##        feature_7        feature_8        feature_9 
-##             0.93             0.96             0.87 
-##  duration_listed 
-##             0.51</code></pre>
+##     transmission            color   odometer_value    year_produced 
+##             0.93             0.73             0.91             0.84 
+##      engine_fuel   engine_has_gas      engine_type  engine_capacity 
+##             0.44             0.07             0.44             0.77 
+##        body_type     has_warranty            state       drivetrain 
+##             0.76             0.62             0.61             0.87 
+##        price_usd  is_exchangeable  location_region number_of_photos 
+##             0.87             0.61             0.92             0.90 
+##       up_counter        feature_0        feature_1        feature_2 
+##             0.51             0.79             0.83             0.95 
+##        feature_3        feature_4        feature_5        feature_6 
+##             0.96             0.93             0.96             0.92 
+##        feature_7        feature_8        feature_9  duration_listed 
+##             0.93             0.96             0.87             0.51</code></pre>
 <p>As it could be observed in the two previous test the values are acceptable and the factor analysis can be performed. The sampling adequacy was acceptable and the Bartlett’s test of sphericity demonstrate that correlations between items were enough for FA(<span class="math inline">\(X^{2}\)</span>(378) = 471200.97, p&lt; .001).</p>
 </div>
 <div id="kaisers-rule" class="section level2">
 <h2>Kaiser’s rule</h2>
 <p>The first step is to observe how many factors there are that we can use for our future analysis. The following analysis is based on the Kaiser’s rule. For this we are going to do the factor analysis in our new subset with all the transformed values and then we are going to consider all the variables or all the factors of the subset. In addition, the rotation method that is going to be implemented in this analysis will be the default rotation method called <em>oblimin</em>. For this analysis the selection of the oblimin method is based on the assumption that there is going to be a correlation between factors. For instance, there could be a strong correlation between engine type and engine fuel.</p>
 <pre class="r"><code>fa(cars_for_factor_analysis, nfactors = 28, rotate = &quot;oblimin&quot;) #6 values greather than 1 based on Karses rule</code></pre>
-<pre><code>## Warning in GPFoblq(L, Tmat = Tmat, normalize = normalize,
-## eps = eps, maxit = maxit, : convergence not obtained in
-## GPFoblq. 1000 iterations used.</code></pre>
+<pre><code>## Warning in GPFoblq(L, Tmat = Tmat, normalize = normalize, eps = eps,
+## maxit = maxit, : convergence not obtained in GPFoblq. 1000 iterations
+## used.</code></pre>
 <pre><code>## Factor Analysis using method =  minres
 ## Call: fa(r = cars_for_factor_analysis, nfactors = 28, rotate = &quot;oblimin&quot;)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
-##                    MR3   MR2   MR4   MR6   MR1   MR7
-## transmission      0.00  0.00  0.00  0.00  0.00 -0.01
-## color            -0.01 -0.01  0.01  0.00 -0.01 -0.06
-## odometer_value    0.11 -0.06 -0.01  0.01  0.03 -0.12
-## year_produced     0.00  0.00  0.00  0.00  0.00  0.93
-## engine_fuel       1.00  0.00  0.00  0.00 -0.01 -0.03
-## engine_has_gas    0.00  0.00  0.00 -0.01 -0.01 -0.03
-## engine_type       0.96  0.00  0.00  0.00  0.01  0.03
-## engine_capacity   0.00 -0.01  0.00  0.00  0.00 -0.02
-## body_type         0.00 -0.01  0.00  0.01  0.00  0.02
-## has_warranty      0.00 -0.88  0.01 -0.01  0.00 -0.02
-## state             0.00  0.88  0.01 -0.01  0.00 -0.02
-## drivetrain        0.00  0.00  0.01  0.01  0.02 -0.06
-## price_usd         0.05  0.10  0.01  0.00 -0.08  0.19
-## is_exchangeable   0.00 -0.06 -0.04  0.02 -0.01  0.02
-## location_region   0.03 -0.03  0.00  0.00  0.00 -0.08
-## number_of_photos -0.01 -0.02  0.00  0.01 -0.01 -0.01
-## up_counter        0.00  0.00  0.85  0.00  0.00  0.01
-## feature_0         0.00 -0.01  0.00  0.90 -0.01  0.01
-## feature_1        -0.01  0.03 -0.02 -0.36  0.00 -0.09
-## feature_2         0.00  0.01  0.00 -0.03  0.06  0.01
-## feature_3        -0.02  0.03  0.00  0.00  0.13 -0.04
-## feature_4         0.00  0.00  0.00  0.01  0.01 -0.01
-## feature_5         0.02  0.00  0.00 -0.05  0.02 -0.03
-## feature_6        -0.02 -0.01  0.00  0.00  0.73  0.00
-## feature_7         0.01  0.01  0.00 -0.01  0.74 -0.02
-## feature_8        -0.03  0.03 -0.01  0.00  0.12 -0.07
-## feature_9         0.01  0.02  0.00 -0.43  0.02  0.00
-## duration_listed   0.00  0.00  0.85  0.00  0.00 -0.02
-##                    MR5  MR13  MR14   MR8   MR9  MR11
-## transmission     -0.02  0.76  0.01 -0.02  0.01  0.00
-## color            -0.04 -0.01 -0.02 -0.02  0.07  0.00
-## odometer_value    0.07  0.05 -0.03 -0.02  0.02  0.02
-## year_produced    -0.01 -0.01  0.00 -0.01  0.00 -0.01
-## engine_fuel      -0.04 -0.04  0.00 -0.11  0.01 -0.01
-## engine_has_gas   -0.05 -0.03  0.00  0.69  0.01 -0.01
-## engine_type       0.05  0.05  0.00  0.13 -0.01  0.01
-## engine_capacity   0.83 -0.02 -0.01 -0.03  0.01 -0.01
-## body_type         0.02  0.00  0.00  0.01  0.60 -0.01
-## has_warranty      0.00  0.00  0.00 -0.01  0.00  0.00
-## state            -0.01 -0.01  0.00 -0.01  0.00  0.00
-## drivetrain       -0.05  0.04  0.02  0.01  0.21  0.06
-## price_usd         0.10 -0.06 -0.03  0.06  0.01 -0.02
-## is_exchangeable  -0.03  0.01 -0.06  0.00  0.00 -0.02
-## location_region  -0.06  0.05  0.00 -0.08  0.00 -0.02
-## number_of_photos -0.02 -0.02 -0.02 -0.02  0.00 -0.01
-## up_counter        0.01  0.00  0.00  0.01  0.00  0.00
-## feature_0         0.00 -0.01  0.00 -0.01 -0.01 -0.02
-## feature_1        -0.02  0.03  0.04  0.00  0.02  0.01
-## feature_2        -0.08  0.04  0.17 -0.01  0.04  0.05
-## feature_3         0.02  0.09  0.02  0.04  0.02  0.12
-## feature_4        -0.01  0.01  0.75  0.00  0.00  0.02
-## feature_5        -0.04  0.04  0.07 -0.02  0.02  0.58
-## feature_6        -0.04 -0.01  0.03 -0.02  0.00 -0.02
-## feature_7         0.02  0.03  0.00  0.01  0.01  0.04
-## feature_8        -0.03  0.04  0.02 -0.01  0.04  0.23
-## feature_9        -0.04  0.04  0.09 -0.02  0.04  0.00
-## duration_listed   0.00  0.00 -0.01 -0.01  0.00  0.00
-##                   MR10  MR15  MR12  MR17  MR18  MR16
-## transmission      0.00  0.00  0.00  0.00  0.00  0.01
-## color            -0.03  0.00  0.14  0.32  0.04 -0.04
-## odometer_value   -0.03 -0.02 -0.06 -0.03 -0.05  0.07
-## year_produced     0.00  0.00  0.00  0.00  0.00  0.00
-## engine_fuel      -0.01  0.01 -0.02  0.00 -0.01  0.01
-## engine_has_gas    0.00  0.00  0.00  0.00  0.00  0.00
-## engine_type       0.01 -0.01  0.02  0.00  0.01 -0.01
-## engine_capacity  -0.01  0.00  0.00  0.00  0.00  0.00
-## body_type         0.01 -0.01 -0.01  0.01  0.01  0.00
-## has_warranty     -0.01  0.00  0.00  0.00  0.01  0.00
-## state            -0.01  0.00  0.00  0.00  0.01  0.00
-## drivetrain       -0.03  0.01  0.04 -0.06 -0.31  0.02
-## price_usd         0.15 -0.05 -0.02  0.24 -0.05  0.03
-## is_exchangeable  -0.13 -0.03  0.06 -0.01  0.02  0.31
-## location_region  -0.08  0.05  0.06 -0.05 -0.01 -0.24
-## number_of_photos  0.56  0.01  0.01 -0.01  0.00  0.00
-## up_counter        0.05 -0.01  0.00 -0.01  0.01  0.00
-## feature_0         0.01  0.00 -0.02  0.01  0.00  0.00
-## feature_1         0.01 -0.03  0.31  0.02  0.00  0.02
-## feature_2         0.00  0.33  0.04 -0.03  0.14  0.12
-## feature_3        -0.02  0.34 -0.05  0.03 -0.04 -0.01
-## feature_4        -0.01  0.00  0.01  0.00  0.00  0.00
-## feature_5        -0.01  0.02  0.00  0.00 -0.01  0.02
-## feature_6        -0.01  0.04  0.00  0.03 -0.03  0.02
-## feature_7         0.00 -0.02  0.00 -0.03  0.04 -0.01
-## feature_8        -0.07  0.04  0.02  0.02  0.21 -0.01
-## feature_9        -0.01  0.03 -0.22  0.09  0.06  0.03
-## duration_listed  -0.05  0.01  0.00  0.01 -0.01  0.00
-##                   MR19  MR21  MR23  MR20  MR26  MR27
-## transmission      0.00  0.00  0.00 -0.01  0.00  0.00
-## color            -0.09  0.00 -0.04  0.03 -0.03  0.00
-## odometer_value   -0.09  0.30  0.01  0.18  0.08  0.03
-## year_produced     0.00  0.00  0.00  0.00  0.00  0.00
-## engine_fuel       0.00  0.00  0.02 -0.02 -0.01 -0.02
-## engine_has_gas    0.00 -0.01 -0.01  0.00  0.00  0.00
-## engine_type       0.00  0.01 -0.03  0.02  0.01  0.02
-## engine_capacity   0.00  0.00  0.00  0.00  0.00  0.00
-## body_type         0.02  0.01 -0.01 -0.02  0.00 -0.01
-## has_warranty      0.01  0.02 -0.01 -0.03  0.01  0.00
-## state             0.01  0.02 -0.01 -0.03  0.01  0.00
-## drivetrain       -0.12 -0.07  0.02  0.15 -0.05  0.05
-## price_usd         0.26 -0.04  0.10 -0.05 -0.10 -0.11
-## is_exchangeable   0.11 -0.10 -0.06  0.02  0.09 -0.05
-## location_region   0.17  0.03 -0.06  0.10  0.07  0.00
-## number_of_photos  0.00 -0.01 -0.02  0.01  0.01 -0.01
-## up_counter       -0.03 -0.02  0.00 -0.04 -0.01  0.00
-## feature_0         0.01 -0.01 -0.01  0.00 -0.01  0.00
-## feature_1         0.02  0.01  0.17 -0.01  0.06  0.12
-## feature_2         0.05  0.00 -0.04  0.04 -0.07  0.08
-## feature_3        -0.05  0.03  0.09 -0.06  0.18  0.03
-## feature_4         0.00  0.00  0.01  0.00  0.01  0.00
-## feature_5         0.00  0.02 -0.01  0.00  0.02  0.05
-## feature_6        -0.02 -0.03 -0.03 -0.01  0.03  0.00
-## feature_7         0.01  0.04  0.03  0.01 -0.01  0.02
-## feature_8        -0.03 -0.08  0.18  0.09  0.11  0.04
-## feature_9         0.01 -0.11 -0.03  0.08  0.06  0.14
-## duration_listed   0.03  0.02  0.00  0.03  0.01  0.00
+##                    MR3   MR2   MR4   MR6   MR1   MR7   MR5  MR13
+## transmission      0.00  0.00  0.00  0.00  0.00 -0.01 -0.02  0.76
+## color            -0.01 -0.01  0.01  0.00 -0.01 -0.06 -0.04 -0.01
+## odometer_value    0.11 -0.06 -0.01  0.01  0.03 -0.12  0.07  0.05
+## year_produced     0.00  0.00  0.00  0.00  0.00  0.93 -0.01 -0.01
+## engine_fuel       1.00  0.00  0.00  0.00 -0.01 -0.03 -0.04 -0.04
+## engine_has_gas    0.00  0.00  0.00 -0.01 -0.01 -0.03 -0.05 -0.03
+## engine_type       0.96  0.00  0.00  0.00  0.01  0.03  0.05  0.05
+## engine_capacity   0.00 -0.01  0.00  0.00  0.00 -0.02  0.83 -0.02
+## body_type         0.00 -0.01  0.00  0.01  0.00  0.02  0.02  0.00
+## has_warranty      0.00 -0.88  0.01 -0.01  0.00 -0.02  0.00  0.00
+## state             0.00  0.88  0.01 -0.01  0.00 -0.02 -0.01 -0.01
+## drivetrain        0.00  0.00  0.01  0.01  0.02 -0.06 -0.05  0.04
+## price_usd         0.05  0.10  0.01  0.00 -0.08  0.19  0.10 -0.06
+## is_exchangeable   0.00 -0.06 -0.04  0.02 -0.01  0.02 -0.03  0.01
+## location_region   0.03 -0.03  0.00  0.00  0.00 -0.08 -0.06  0.05
+## number_of_photos -0.01 -0.02  0.00  0.01 -0.01 -0.01 -0.02 -0.02
+## up_counter        0.00  0.00  0.85  0.00  0.00  0.01  0.01  0.00
+## feature_0         0.00 -0.01  0.00  0.90 -0.01  0.01  0.00 -0.01
+## feature_1        -0.01  0.03 -0.02 -0.36  0.00 -0.09 -0.02  0.03
+## feature_2         0.00  0.01  0.00 -0.03  0.06  0.01 -0.08  0.04
+## feature_3        -0.02  0.03  0.00  0.00  0.13 -0.04  0.02  0.09
+## feature_4         0.00  0.00  0.00  0.01  0.01 -0.01 -0.01  0.01
+## feature_5         0.02  0.00  0.00 -0.05  0.02 -0.03 -0.04  0.04
+## feature_6        -0.02 -0.01  0.00  0.00  0.73  0.00 -0.04 -0.01
+## feature_7         0.01  0.01  0.00 -0.01  0.74 -0.02  0.02  0.03
+## feature_8        -0.03  0.03 -0.01  0.00  0.12 -0.07 -0.03  0.04
+## feature_9         0.01  0.02  0.00 -0.43  0.02  0.00 -0.04  0.04
+## duration_listed   0.00  0.00  0.85  0.00  0.00 -0.02  0.00  0.00
+##                   MR14   MR8   MR9  MR11  MR10  MR15  MR12  MR17
+## transmission      0.01 -0.02  0.01  0.00  0.00  0.00  0.00  0.00
+## color            -0.02 -0.02  0.07  0.00 -0.03  0.00  0.14  0.32
+## odometer_value   -0.03 -0.02  0.02  0.02 -0.03 -0.02 -0.06 -0.03
+## year_produced     0.00 -0.01  0.00 -0.01  0.00  0.00  0.00  0.00
+## engine_fuel       0.00 -0.11  0.01 -0.01 -0.01  0.01 -0.02  0.00
+## engine_has_gas    0.00  0.69  0.01 -0.01  0.00  0.00  0.00  0.00
+## engine_type       0.00  0.13 -0.01  0.01  0.01 -0.01  0.02  0.00
+## engine_capacity  -0.01 -0.03  0.01 -0.01 -0.01  0.00  0.00  0.00
+## body_type         0.00  0.01  0.60 -0.01  0.01 -0.01 -0.01  0.01
+## has_warranty      0.00 -0.01  0.00  0.00 -0.01  0.00  0.00  0.00
+## state             0.00 -0.01  0.00  0.00 -0.01  0.00  0.00  0.00
+## drivetrain        0.02  0.01  0.21  0.06 -0.03  0.01  0.04 -0.06
+## price_usd        -0.03  0.06  0.01 -0.02  0.15 -0.05 -0.02  0.24
+## is_exchangeable  -0.06  0.00  0.00 -0.02 -0.13 -0.03  0.06 -0.01
+## location_region   0.00 -0.08  0.00 -0.02 -0.08  0.05  0.06 -0.05
+## number_of_photos -0.02 -0.02  0.00 -0.01  0.56  0.01  0.01 -0.01
+## up_counter        0.00  0.01  0.00  0.00  0.05 -0.01  0.00 -0.01
+## feature_0         0.00 -0.01 -0.01 -0.02  0.01  0.00 -0.02  0.01
+## feature_1         0.04  0.00  0.02  0.01  0.01 -0.03  0.31  0.02
+## feature_2         0.17 -0.01  0.04  0.05  0.00  0.33  0.04 -0.03
+## feature_3         0.02  0.04  0.02  0.12 -0.02  0.34 -0.05  0.03
+## feature_4         0.75  0.00  0.00  0.02 -0.01  0.00  0.01  0.00
+## feature_5         0.07 -0.02  0.02  0.58 -0.01  0.02  0.00  0.00
+## feature_6         0.03 -0.02  0.00 -0.02 -0.01  0.04  0.00  0.03
+## feature_7         0.00  0.01  0.01  0.04  0.00 -0.02  0.00 -0.03
+## feature_8         0.02 -0.01  0.04  0.23 -0.07  0.04  0.02  0.02
+## feature_9         0.09 -0.02  0.04  0.00 -0.01  0.03 -0.22  0.09
+## duration_listed  -0.01 -0.01  0.00  0.00 -0.05  0.01  0.00  0.01
+##                   MR18  MR16  MR19  MR21  MR23  MR20  MR26  MR27
+## transmission      0.00  0.01  0.00  0.00  0.00 -0.01  0.00  0.00
+## color             0.04 -0.04 -0.09  0.00 -0.04  0.03 -0.03  0.00
+## odometer_value   -0.05  0.07 -0.09  0.30  0.01  0.18  0.08  0.03
+## year_produced     0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+## engine_fuel      -0.01  0.01  0.00  0.00  0.02 -0.02 -0.01 -0.02
+## engine_has_gas    0.00  0.00  0.00 -0.01 -0.01  0.00  0.00  0.00
+## engine_type       0.01 -0.01  0.00  0.01 -0.03  0.02  0.01  0.02
+## engine_capacity   0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+## body_type         0.01  0.00  0.02  0.01 -0.01 -0.02  0.00 -0.01
+## has_warranty      0.01  0.00  0.01  0.02 -0.01 -0.03  0.01  0.00
+## state             0.01  0.00  0.01  0.02 -0.01 -0.03  0.01  0.00
+## drivetrain       -0.31  0.02 -0.12 -0.07  0.02  0.15 -0.05  0.05
+## price_usd        -0.05  0.03  0.26 -0.04  0.10 -0.05 -0.10 -0.11
+## is_exchangeable   0.02  0.31  0.11 -0.10 -0.06  0.02  0.09 -0.05
+## location_region  -0.01 -0.24  0.17  0.03 -0.06  0.10  0.07  0.00
+## number_of_photos  0.00  0.00  0.00 -0.01 -0.02  0.01  0.01 -0.01
+## up_counter        0.01  0.00 -0.03 -0.02  0.00 -0.04 -0.01  0.00
+## feature_0         0.00  0.00  0.01 -0.01 -0.01  0.00 -0.01  0.00
+## feature_1         0.00  0.02  0.02  0.01  0.17 -0.01  0.06  0.12
+## feature_2         0.14  0.12  0.05  0.00 -0.04  0.04 -0.07  0.08
+## feature_3        -0.04 -0.01 -0.05  0.03  0.09 -0.06  0.18  0.03
+## feature_4         0.00  0.00  0.00  0.00  0.01  0.00  0.01  0.00
+## feature_5        -0.01  0.02  0.00  0.02 -0.01  0.00  0.02  0.05
+## feature_6        -0.03  0.02 -0.02 -0.03 -0.03 -0.01  0.03  0.00
+## feature_7         0.04 -0.01  0.01  0.04  0.03  0.01 -0.01  0.02
+## feature_8         0.21 -0.01 -0.03 -0.08  0.18  0.09  0.11  0.04
+## feature_9         0.06  0.03  0.01 -0.11 -0.03  0.08  0.06  0.14
+## duration_listed  -0.01  0.00  0.03  0.02  0.00  0.03  0.01  0.00
 ##                   MR24  MR22  MR25 MR28    h2    u2 com
 ## transmission      0.00  0.00  0.00    0 0.634 0.366 1.0
 ## color             0.00  0.02  0.02    0 0.095 0.905 2.0
@@ -844,148 +812,119 @@ library(tidyr) #to transform the df(e.g. unite)</code></pre>
 ## feature_9        -0.05  0.02  0.06    0 0.658 0.342 2.6
 ## duration_listed  -0.05 -0.08 -0.06    0 0.750 0.250 1.1
 ## 
-##                        MR3  MR2  MR4  MR6  MR1  MR7  MR5
-## SS loadings           1.97 1.61 1.46 1.42 1.43 1.23 0.86
-## Proportion Var        0.07 0.06 0.05 0.05 0.05 0.04 0.03
-## Cumulative Var        0.07 0.13 0.18 0.23 0.28 0.33 0.36
-## Proportion Explained  0.12 0.09 0.09 0.08 0.08 0.07 0.05
-## Cumulative Proportion 0.12 0.21 0.30 0.38 0.46 0.53 0.58
-##                       MR13 MR14  MR8  MR9 MR11 MR10 MR15
-## SS loadings           0.84 0.85 0.53 0.49 0.76 0.49 0.46
-## Proportion Var        0.03 0.03 0.02 0.02 0.03 0.02 0.02
-## Cumulative Var        0.39 0.42 0.44 0.45 0.48 0.50 0.51
-## Proportion Explained  0.05 0.05 0.03 0.03 0.04 0.03 0.03
-## Cumulative Proportion 0.63 0.68 0.71 0.74 0.79 0.82 0.84
-##                       MR12 MR17 MR18 MR16 MR19 MR21 MR23
-## SS loadings           0.22 0.25 0.24 0.21 0.26 0.21 0.20
-## Proportion Var        0.01 0.01 0.01 0.01 0.01 0.01 0.01
-## Cumulative Var        0.52 0.53 0.54 0.55 0.56 0.56 0.57
-## Proportion Explained  0.01 0.01 0.01 0.01 0.02 0.01 0.01
-## Cumulative Proportion 0.86 0.87 0.89 0.90 0.91 0.92 0.94
-##                       MR20 MR26 MR27 MR24 MR22 MR25 MR28
-## SS loadings           0.19 0.31 0.36 0.09 0.05 0.08 0.00
-## Proportion Var        0.01 0.01 0.01 0.00 0.00 0.00 0.00
-## Cumulative Var        0.58 0.59 0.60 0.61 0.61 0.61 0.61
-## Proportion Explained  0.01 0.02 0.02 0.01 0.00 0.00 0.00
-## Cumulative Proportion 0.95 0.97 0.99 0.99 1.00 1.00 1.00
+##                        MR3  MR2  MR4  MR6  MR1  MR7  MR5 MR13 MR14
+## SS loadings           1.97 1.61 1.46 1.42 1.43 1.23 0.86 0.84 0.85
+## Proportion Var        0.07 0.06 0.05 0.05 0.05 0.04 0.03 0.03 0.03
+## Cumulative Var        0.07 0.13 0.18 0.23 0.28 0.33 0.36 0.39 0.42
+## Proportion Explained  0.12 0.09 0.09 0.08 0.08 0.07 0.05 0.05 0.05
+## Cumulative Proportion 0.12 0.21 0.30 0.38 0.46 0.53 0.58 0.63 0.68
+##                        MR8  MR9 MR11 MR10 MR15 MR12 MR17 MR18 MR16
+## SS loadings           0.53 0.49 0.76 0.49 0.46 0.22 0.25 0.24 0.21
+## Proportion Var        0.02 0.02 0.03 0.02 0.02 0.01 0.01 0.01 0.01
+## Cumulative Var        0.44 0.45 0.48 0.50 0.51 0.52 0.53 0.54 0.55
+## Proportion Explained  0.03 0.03 0.04 0.03 0.03 0.01 0.01 0.01 0.01
+## Cumulative Proportion 0.71 0.74 0.79 0.82 0.84 0.86 0.87 0.89 0.90
+##                       MR19 MR21 MR23 MR20 MR26 MR27 MR24 MR22 MR25
+## SS loadings           0.26 0.21 0.20 0.19 0.31 0.36 0.09 0.05 0.08
+## Proportion Var        0.01 0.01 0.01 0.01 0.01 0.01 0.00 0.00 0.00
+## Cumulative Var        0.56 0.56 0.57 0.58 0.59 0.60 0.61 0.61 0.61
+## Proportion Explained  0.02 0.01 0.01 0.01 0.02 0.02 0.01 0.00 0.00
+## Cumulative Proportion 0.91 0.92 0.94 0.95 0.97 0.99 0.99 1.00 1.00
+##                       MR28
+## SS loadings           0.00
+## Proportion Var        0.00
+## Cumulative Var        0.61
+## Proportion Explained  0.00
+## Cumulative Proportion 1.00
 ## 
 ##  With factor correlations of 
-##        MR3   MR2   MR4   MR6   MR1   MR7   MR5  MR13
-## MR3   1.00 -0.06  0.00  0.01 -0.10  0.03  0.12  0.16
-## MR2  -0.06  1.00 -0.03 -0.20  0.05  0.23 -0.06 -0.09
-## MR4   0.00 -0.03  1.00  0.05 -0.04 -0.01  0.10 -0.05
-## MR6   0.01 -0.20  0.05  1.00 -0.30  0.34  0.16 -0.28
-## MR1  -0.10  0.05 -0.04 -0.30  1.00 -0.51 -0.33  0.50
-## MR7   0.03  0.23 -0.01  0.34 -0.51  1.00  0.02 -0.51
-## MR5   0.12 -0.06  0.10  0.16 -0.33  0.02  1.00 -0.60
-## MR13  0.16 -0.09 -0.05 -0.28  0.50 -0.51 -0.60  1.00
-## MR14 -0.01  0.08 -0.08 -0.39  0.56 -0.20 -0.67  0.66
-## MR8   0.06  0.04 -0.01  0.02 -0.06  0.13 -0.05  0.05
-## MR9   0.13 -0.08  0.02 -0.23  0.26 -0.20 -0.07  0.35
-## MR11  0.06  0.12 -0.05 -0.41  0.56 -0.52 -0.31  0.58
-## MR10  0.05  0.19  0.05  0.12 -0.37  0.49  0.24 -0.40
-## MR15 -0.11  0.07 -0.01 -0.15  0.57 -0.22 -0.36  0.35
-## MR12 -0.06  0.03 -0.05 -0.19 -0.04 -0.20 -0.05  0.02
-## MR17  0.04  0.25  0.03 -0.22 -0.15  0.36  0.16 -0.17
-## MR18 -0.07  0.03 -0.05 -0.24  0.25 -0.03 -0.10  0.13
-## MR16  0.10 -0.09 -0.10 -0.17  0.17 -0.01 -0.25  0.19
-## MR19  0.07  0.17  0.00  0.00 -0.28  0.50  0.18 -0.23
-## MR21  0.24 -0.14  0.04  0.17  0.09 -0.40  0.34  0.10
-## MR23  0.00  0.27 -0.04 -0.43  0.20 -0.26  0.07  0.09
-## MR20  0.19 -0.11 -0.05 -0.16  0.15 -0.41  0.04  0.26
-## MR26 -0.03 -0.15 -0.09 -0.39  0.58 -0.57 -0.14  0.51
-## MR27  0.00  0.02 -0.05 -0.72  0.50 -0.63 -0.31  0.60
-## MR24  0.03  0.03 -0.04 -0.09  0.22 -0.13 -0.05  0.16
-## MR22  0.05  0.04  0.05 -0.18  0.08 -0.15 -0.03  0.07
-## MR25  0.07  0.00 -0.06 -0.35  0.13 -0.25  0.12  0.16
-## MR28  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
-##       MR14   MR8   MR9  MR11  MR10  MR15  MR12  MR17
-## MR3  -0.01  0.06  0.13  0.06  0.05 -0.11 -0.06  0.04
-## MR2   0.08  0.04 -0.08  0.12  0.19  0.07  0.03  0.25
-## MR4  -0.08 -0.01  0.02 -0.05  0.05 -0.01 -0.05  0.03
-## MR6  -0.39  0.02 -0.23 -0.41  0.12 -0.15 -0.19 -0.22
-## MR1   0.56 -0.06  0.26  0.56 -0.37  0.57 -0.04 -0.15
-## MR7  -0.20  0.13 -0.20 -0.52  0.49 -0.22 -0.20  0.36
-## MR5  -0.67 -0.05 -0.07 -0.31  0.24 -0.36 -0.05  0.16
-## MR13  0.66  0.05  0.35  0.58 -0.40  0.35  0.02 -0.17
-## MR14  1.00 -0.02  0.30  0.68 -0.22  0.52 -0.06  0.01
-## MR8  -0.02  1.00 -0.03 -0.04  0.15 -0.10  0.08  0.06
-## MR9   0.30 -0.03  1.00  0.39 -0.16  0.18  0.03  0.10
-## MR11  0.68 -0.04  0.39  1.00 -0.26  0.42  0.03 -0.07
-## MR10 -0.22  0.15 -0.16 -0.26  1.00 -0.20 -0.01  0.26
-## MR15  0.52 -0.10  0.18  0.42 -0.20  1.00 -0.14 -0.04
-## MR12 -0.06  0.08  0.03  0.03 -0.01 -0.14  1.00 -0.08
-## MR17  0.01  0.06  0.10 -0.07  0.26 -0.04 -0.08  1.00
-## MR18  0.26 -0.01 -0.18  0.22 -0.08  0.20 -0.06  0.07
-## MR16  0.31 -0.01  0.18  0.21 -0.16  0.19 -0.01  0.06
-## MR19 -0.11  0.04 -0.16 -0.19  0.17 -0.13  0.04  0.39
-## MR21 -0.15 -0.08 -0.10  0.11 -0.10 -0.04  0.10 -0.30
-## MR23  0.05 -0.16  0.15  0.39  0.13  0.03  0.34  0.22
-## MR20  0.05  0.04  0.31  0.19 -0.32  0.03 -0.08 -0.13
-## MR26  0.26  0.01  0.03  0.49 -0.49  0.36  0.00 -0.10
-## MR27  0.59  0.07  0.32  0.57 -0.29  0.37  0.06 -0.13
-## MR24  0.31 -0.05  0.02  0.16  0.20  0.22  0.22  0.02
-## MR22  0.09  0.05  0.15  0.08  0.16  0.01  0.03 -0.05
-## MR25  0.04 -0.12  0.07  0.22  0.19 -0.02 -0.03 -0.12
-## MR28  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
-##       MR18  MR16  MR19  MR21  MR23  MR20  MR26  MR27
-## MR3  -0.07  0.10  0.07  0.24  0.00  0.19 -0.03  0.00
-## MR2   0.03 -0.09  0.17 -0.14  0.27 -0.11 -0.15  0.02
-## MR4  -0.05 -0.10  0.00  0.04 -0.04 -0.05 -0.09 -0.05
-## MR6  -0.24 -0.17  0.00  0.17 -0.43 -0.16 -0.39 -0.72
-## MR1   0.25  0.17 -0.28  0.09  0.20  0.15  0.58  0.50
-## MR7  -0.03 -0.01  0.50 -0.40 -0.26 -0.41 -0.57 -0.63
-## MR5  -0.10 -0.25  0.18  0.34  0.07  0.04 -0.14 -0.31
-## MR13  0.13  0.19 -0.23  0.10  0.09  0.26  0.51  0.60
-## MR14  0.26  0.31 -0.11 -0.15  0.05  0.05  0.26  0.59
-## MR8  -0.01 -0.01  0.04 -0.08 -0.16  0.04  0.01  0.07
-## MR9  -0.18  0.18 -0.16 -0.10  0.15  0.31  0.03  0.32
-## MR11  0.22  0.21 -0.19  0.11  0.39  0.19  0.49  0.57
-## MR10 -0.08 -0.16  0.17 -0.10  0.13 -0.32 -0.49 -0.29
-## MR15  0.20  0.19 -0.13 -0.04  0.03  0.03  0.36  0.37
-## MR12 -0.06 -0.01  0.04  0.10  0.34 -0.08  0.00  0.06
-## MR17  0.07  0.06  0.39 -0.30  0.22 -0.13 -0.10 -0.13
-## MR18  1.00  0.10  0.16 -0.08  0.10 -0.08  0.21  0.23
-## MR16  0.10  1.00  0.06 -0.14  0.01  0.06  0.15  0.15
-## MR19  0.16  0.06  1.00 -0.14  0.07 -0.20 -0.22 -0.36
-## MR21 -0.08 -0.14 -0.14  1.00  0.05  0.09  0.14 -0.02
-## MR23  0.10  0.01  0.07  0.05  1.00 -0.04  0.23  0.20
-## MR20 -0.08  0.06 -0.20  0.09 -0.04  1.00  0.20  0.36
-## MR26  0.21  0.15 -0.22  0.14  0.23  0.20  1.00  0.50
-## MR27  0.23  0.15 -0.36 -0.02  0.20  0.36  0.50  1.00
-## MR24  0.02 -0.03 -0.21  0.07  0.18 -0.03  0.11  0.15
-## MR22  0.01  0.00 -0.20  0.00  0.03 -0.08  0.04  0.19
-## MR25  0.20 -0.08 -0.21  0.06  0.30  0.07  0.17  0.26
-## MR28  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
-##       MR24  MR22  MR25 MR28
-## MR3   0.03  0.05  0.07    0
-## MR2   0.03  0.04  0.00    0
-## MR4  -0.04  0.05 -0.06    0
-## MR6  -0.09 -0.18 -0.35    0
-## MR1   0.22  0.08  0.13    0
-## MR7  -0.13 -0.15 -0.25    0
-## MR5  -0.05 -0.03  0.12    0
-## MR13  0.16  0.07  0.16    0
-## MR14  0.31  0.09  0.04    0
-## MR8  -0.05  0.05 -0.12    0
-## MR9   0.02  0.15  0.07    0
-## MR11  0.16  0.08  0.22    0
-## MR10  0.20  0.16  0.19    0
-## MR15  0.22  0.01 -0.02    0
-## MR12  0.22  0.03 -0.03    0
-## MR17  0.02 -0.05 -0.12    0
-## MR18  0.02  0.01  0.20    0
-## MR16 -0.03  0.00 -0.08    0
-## MR19 -0.21 -0.20 -0.21    0
-## MR21  0.07  0.00  0.06    0
-## MR23  0.18  0.03  0.30    0
-## MR20 -0.03 -0.08  0.07    0
-## MR26  0.11  0.04  0.17    0
-## MR27  0.15  0.19  0.26    0
-## MR24  1.00  0.08  0.20    0
-## MR22  0.08  1.00  0.15    0
-## MR25  0.20  0.15  1.00    0
-## MR28  0.00  0.00  0.00    1
+##        MR3   MR2   MR4   MR6   MR1   MR7   MR5  MR13  MR14   MR8
+## MR3   1.00 -0.06  0.00  0.01 -0.10  0.03  0.12  0.16 -0.01  0.06
+## MR2  -0.06  1.00 -0.03 -0.20  0.05  0.23 -0.06 -0.09  0.08  0.04
+## MR4   0.00 -0.03  1.00  0.05 -0.04 -0.01  0.10 -0.05 -0.08 -0.01
+## MR6   0.01 -0.20  0.05  1.00 -0.30  0.34  0.16 -0.28 -0.39  0.02
+## MR1  -0.10  0.05 -0.04 -0.30  1.00 -0.51 -0.33  0.50  0.56 -0.06
+## MR7   0.03  0.23 -0.01  0.34 -0.51  1.00  0.02 -0.51 -0.20  0.13
+## MR5   0.12 -0.06  0.10  0.16 -0.33  0.02  1.00 -0.60 -0.67 -0.05
+## MR13  0.16 -0.09 -0.05 -0.28  0.50 -0.51 -0.60  1.00  0.66  0.05
+## MR14 -0.01  0.08 -0.08 -0.39  0.56 -0.20 -0.67  0.66  1.00 -0.02
+## MR8   0.06  0.04 -0.01  0.02 -0.06  0.13 -0.05  0.05 -0.02  1.00
+## MR9   0.13 -0.08  0.02 -0.23  0.26 -0.20 -0.07  0.35  0.30 -0.03
+## MR11  0.06  0.12 -0.05 -0.41  0.56 -0.52 -0.31  0.58  0.68 -0.04
+## MR10  0.05  0.19  0.05  0.12 -0.37  0.49  0.24 -0.40 -0.22  0.15
+## MR15 -0.11  0.07 -0.01 -0.15  0.57 -0.22 -0.36  0.35  0.52 -0.10
+## MR12 -0.06  0.03 -0.05 -0.19 -0.04 -0.20 -0.05  0.02 -0.06  0.08
+## MR17  0.04  0.25  0.03 -0.22 -0.15  0.36  0.16 -0.17  0.01  0.06
+## MR18 -0.07  0.03 -0.05 -0.24  0.25 -0.03 -0.10  0.13  0.26 -0.01
+## MR16  0.10 -0.09 -0.10 -0.17  0.17 -0.01 -0.25  0.19  0.31 -0.01
+## MR19  0.07  0.17  0.00  0.00 -0.28  0.50  0.18 -0.23 -0.11  0.04
+## MR21  0.24 -0.14  0.04  0.17  0.09 -0.40  0.34  0.10 -0.15 -0.08
+## MR23  0.00  0.27 -0.04 -0.43  0.20 -0.26  0.07  0.09  0.05 -0.16
+## MR20  0.19 -0.11 -0.05 -0.16  0.15 -0.41  0.04  0.26  0.05  0.04
+## MR26 -0.03 -0.15 -0.09 -0.39  0.58 -0.57 -0.14  0.51  0.26  0.01
+## MR27  0.00  0.02 -0.05 -0.72  0.50 -0.63 -0.31  0.60  0.59  0.07
+## MR24  0.03  0.03 -0.04 -0.09  0.22 -0.13 -0.05  0.16  0.31 -0.05
+## MR22  0.05  0.04  0.05 -0.18  0.08 -0.15 -0.03  0.07  0.09  0.05
+## MR25  0.07  0.00 -0.06 -0.35  0.13 -0.25  0.12  0.16  0.04 -0.12
+## MR28  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+##        MR9  MR11  MR10  MR15  MR12  MR17  MR18  MR16  MR19  MR21
+## MR3   0.13  0.06  0.05 -0.11 -0.06  0.04 -0.07  0.10  0.07  0.24
+## MR2  -0.08  0.12  0.19  0.07  0.03  0.25  0.03 -0.09  0.17 -0.14
+## MR4   0.02 -0.05  0.05 -0.01 -0.05  0.03 -0.05 -0.10  0.00  0.04
+## MR6  -0.23 -0.41  0.12 -0.15 -0.19 -0.22 -0.24 -0.17  0.00  0.17
+## MR1   0.26  0.56 -0.37  0.57 -0.04 -0.15  0.25  0.17 -0.28  0.09
+## MR7  -0.20 -0.52  0.49 -0.22 -0.20  0.36 -0.03 -0.01  0.50 -0.40
+## MR5  -0.07 -0.31  0.24 -0.36 -0.05  0.16 -0.10 -0.25  0.18  0.34
+## MR13  0.35  0.58 -0.40  0.35  0.02 -0.17  0.13  0.19 -0.23  0.10
+## MR14  0.30  0.68 -0.22  0.52 -0.06  0.01  0.26  0.31 -0.11 -0.15
+## MR8  -0.03 -0.04  0.15 -0.10  0.08  0.06 -0.01 -0.01  0.04 -0.08
+## MR9   1.00  0.39 -0.16  0.18  0.03  0.10 -0.18  0.18 -0.16 -0.10
+## MR11  0.39  1.00 -0.26  0.42  0.03 -0.07  0.22  0.21 -0.19  0.11
+## MR10 -0.16 -0.26  1.00 -0.20 -0.01  0.26 -0.08 -0.16  0.17 -0.10
+## MR15  0.18  0.42 -0.20  1.00 -0.14 -0.04  0.20  0.19 -0.13 -0.04
+## MR12  0.03  0.03 -0.01 -0.14  1.00 -0.08 -0.06 -0.01  0.04  0.10
+## MR17  0.10 -0.07  0.26 -0.04 -0.08  1.00  0.07  0.06  0.39 -0.30
+## MR18 -0.18  0.22 -0.08  0.20 -0.06  0.07  1.00  0.10  0.16 -0.08
+## MR16  0.18  0.21 -0.16  0.19 -0.01  0.06  0.10  1.00  0.06 -0.14
+## MR19 -0.16 -0.19  0.17 -0.13  0.04  0.39  0.16  0.06  1.00 -0.14
+## MR21 -0.10  0.11 -0.10 -0.04  0.10 -0.30 -0.08 -0.14 -0.14  1.00
+## MR23  0.15  0.39  0.13  0.03  0.34  0.22  0.10  0.01  0.07  0.05
+## MR20  0.31  0.19 -0.32  0.03 -0.08 -0.13 -0.08  0.06 -0.20  0.09
+## MR26  0.03  0.49 -0.49  0.36  0.00 -0.10  0.21  0.15 -0.22  0.14
+## MR27  0.32  0.57 -0.29  0.37  0.06 -0.13  0.23  0.15 -0.36 -0.02
+## MR24  0.02  0.16  0.20  0.22  0.22  0.02  0.02 -0.03 -0.21  0.07
+## MR22  0.15  0.08  0.16  0.01  0.03 -0.05  0.01  0.00 -0.20  0.00
+## MR25  0.07  0.22  0.19 -0.02 -0.03 -0.12  0.20 -0.08 -0.21  0.06
+## MR28  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+##       MR23  MR20  MR26  MR27  MR24  MR22  MR25 MR28
+## MR3   0.00  0.19 -0.03  0.00  0.03  0.05  0.07    0
+## MR2   0.27 -0.11 -0.15  0.02  0.03  0.04  0.00    0
+## MR4  -0.04 -0.05 -0.09 -0.05 -0.04  0.05 -0.06    0
+## MR6  -0.43 -0.16 -0.39 -0.72 -0.09 -0.18 -0.35    0
+## MR1   0.20  0.15  0.58  0.50  0.22  0.08  0.13    0
+## MR7  -0.26 -0.41 -0.57 -0.63 -0.13 -0.15 -0.25    0
+## MR5   0.07  0.04 -0.14 -0.31 -0.05 -0.03  0.12    0
+## MR13  0.09  0.26  0.51  0.60  0.16  0.07  0.16    0
+## MR14  0.05  0.05  0.26  0.59  0.31  0.09  0.04    0
+## MR8  -0.16  0.04  0.01  0.07 -0.05  0.05 -0.12    0
+## MR9   0.15  0.31  0.03  0.32  0.02  0.15  0.07    0
+## MR11  0.39  0.19  0.49  0.57  0.16  0.08  0.22    0
+## MR10  0.13 -0.32 -0.49 -0.29  0.20  0.16  0.19    0
+## MR15  0.03  0.03  0.36  0.37  0.22  0.01 -0.02    0
+## MR12  0.34 -0.08  0.00  0.06  0.22  0.03 -0.03    0
+## MR17  0.22 -0.13 -0.10 -0.13  0.02 -0.05 -0.12    0
+## MR18  0.10 -0.08  0.21  0.23  0.02  0.01  0.20    0
+## MR16  0.01  0.06  0.15  0.15 -0.03  0.00 -0.08    0
+## MR19  0.07 -0.20 -0.22 -0.36 -0.21 -0.20 -0.21    0
+## MR21  0.05  0.09  0.14 -0.02  0.07  0.00  0.06    0
+## MR23  1.00 -0.04  0.23  0.20  0.18  0.03  0.30    0
+## MR20 -0.04  1.00  0.20  0.36 -0.03 -0.08  0.07    0
+## MR26  0.23  0.20  1.00  0.50  0.11  0.04  0.17    0
+## MR27  0.20  0.36  0.50  1.00  0.15  0.19  0.26    0
+## MR24  0.18 -0.03  0.11  0.15  1.00  0.08  0.20    0
+## MR22  0.03 -0.08  0.04  0.19  0.08  1.00  0.15    0
+## MR25  0.30  0.07  0.17  0.26  0.20  0.15  1.00    0
+## MR28  0.00  0.00  0.00  0.00  0.00  0.00  0.00    1
 ## 
 ## Mean item complexity =  2.2
 ## Test of the hypothesis that 28 factors are sufficient.
@@ -1002,114 +941,38 @@ library(tidyr) #to transform the df(e.g. unite)</code></pre>
 ## Tucker Lewis Index of factoring reliability =  1.001
 ## Fit based upon off diagonal values = 1
 ## Measures of factor score adequacy             
-##                                                    MR3
-## Correlation of (regression) scores with factors   1.00
-## Multiple R square of scores with factors          1.00
-## Minimum correlation of possible factor scores     0.99
-##                                                    MR2
-## Correlation of (regression) scores with factors   0.94
-## Multiple R square of scores with factors          0.88
-## Minimum correlation of possible factor scores     0.77
-##                                                    MR4
-## Correlation of (regression) scores with factors   0.92
-## Multiple R square of scores with factors          0.86
-## Minimum correlation of possible factor scores     0.71
-##                                                    MR6
-## Correlation of (regression) scores with factors   0.95
-## Multiple R square of scores with factors          0.90
-## Minimum correlation of possible factor scores     0.80
-##                                                    MR1
-## Correlation of (regression) scores with factors   0.91
-## Multiple R square of scores with factors          0.82
-## Minimum correlation of possible factor scores     0.64
-##                                                    MR7
-## Correlation of (regression) scores with factors   0.96
-## Multiple R square of scores with factors          0.91
-## Minimum correlation of possible factor scores     0.83
-##                                                    MR5
-## Correlation of (regression) scores with factors   0.89
-## Multiple R square of scores with factors          0.80
-## Minimum correlation of possible factor scores     0.60
-##                                                   MR13
-## Correlation of (regression) scores with factors   0.89
-## Multiple R square of scores with factors          0.79
-## Minimum correlation of possible factor scores     0.59
-##                                                   MR14
-## Correlation of (regression) scores with factors   0.89
-## Multiple R square of scores with factors          0.79
-## Minimum correlation of possible factor scores     0.58
-##                                                    MR8
-## Correlation of (regression) scores with factors   0.92
-## Multiple R square of scores with factors          0.86
-## Minimum correlation of possible factor scores     0.71
-##                                                    MR9
-## Correlation of (regression) scores with factors   0.71
-## Multiple R square of scores with factors          0.50
-## Minimum correlation of possible factor scores     0.01
-##                                                   MR11
-## Correlation of (regression) scores with factors   0.85
-## Multiple R square of scores with factors          0.73
-## Minimum correlation of possible factor scores     0.45
-##                                                   MR10
-## Correlation of (regression) scores with factors   0.75
-## Multiple R square of scores with factors          0.56
-## Minimum correlation of possible factor scores     0.12
-##                                                   MR15
-## Correlation of (regression) scores with factors   0.74
-## Multiple R square of scores with factors          0.55
-## Minimum correlation of possible factor scores     0.11
-##                                                    MR12
-## Correlation of (regression) scores with factors    0.67
-## Multiple R square of scores with factors           0.45
-## Minimum correlation of possible factor scores     -0.09
-##                                                   MR17
-## Correlation of (regression) scores with factors   0.74
-## Multiple R square of scores with factors          0.55
-## Minimum correlation of possible factor scores     0.10
-##                                                    MR18
-## Correlation of (regression) scores with factors    0.62
-## Multiple R square of scores with factors           0.38
-## Minimum correlation of possible factor scores     -0.24
-##                                                    MR16
-## Correlation of (regression) scores with factors    0.56
-## Multiple R square of scores with factors           0.31
-## Minimum correlation of possible factor scores     -0.38
-##                                                   MR19
-## Correlation of (regression) scores with factors   0.73
-## Multiple R square of scores with factors          0.54
-## Minimum correlation of possible factor scores     0.08
-##                                                    MR21
-## Correlation of (regression) scores with factors    0.69
-## Multiple R square of scores with factors           0.48
-## Minimum correlation of possible factor scores     -0.04
-##                                                   MR23
-## Correlation of (regression) scores with factors   0.75
-## Multiple R square of scores with factors          0.56
-## Minimum correlation of possible factor scores     0.12
-##                                                    MR20
-## Correlation of (regression) scores with factors    0.62
-## Multiple R square of scores with factors           0.39
-## Minimum correlation of possible factor scores     -0.23
-##                                                   MR26
-## Correlation of (regression) scores with factors   0.77
-## Multiple R square of scores with factors          0.60
-## Minimum correlation of possible factor scores     0.20
-##                                                   MR27
-## Correlation of (regression) scores with factors   0.89
-## Multiple R square of scores with factors          0.80
-## Minimum correlation of possible factor scores     0.60
-##                                                    MR24
-## Correlation of (regression) scores with factors    0.52
-## Multiple R square of scores with factors           0.27
-## Minimum correlation of possible factor scores     -0.47
-##                                                    MR22
-## Correlation of (regression) scores with factors    0.43
-## Multiple R square of scores with factors           0.19
-## Minimum correlation of possible factor scores     -0.62
-##                                                    MR25
-## Correlation of (regression) scores with factors    0.57
-## Multiple R square of scores with factors           0.32
-## Minimum correlation of possible factor scores     -0.35
+##                                                    MR3  MR2  MR4  MR6
+## Correlation of (regression) scores with factors   1.00 0.94 0.92 0.95
+## Multiple R square of scores with factors          1.00 0.88 0.86 0.90
+## Minimum correlation of possible factor scores     0.99 0.77 0.71 0.80
+##                                                    MR1  MR7  MR5 MR13
+## Correlation of (regression) scores with factors   0.91 0.96 0.89 0.89
+## Multiple R square of scores with factors          0.82 0.91 0.80 0.79
+## Minimum correlation of possible factor scores     0.64 0.83 0.60 0.59
+##                                                   MR14  MR8  MR9 MR11
+## Correlation of (regression) scores with factors   0.89 0.92 0.71 0.85
+## Multiple R square of scores with factors          0.79 0.86 0.50 0.73
+## Minimum correlation of possible factor scores     0.58 0.71 0.01 0.45
+##                                                   MR10 MR15  MR12
+## Correlation of (regression) scores with factors   0.75 0.74  0.67
+## Multiple R square of scores with factors          0.56 0.55  0.45
+## Minimum correlation of possible factor scores     0.12 0.11 -0.09
+##                                                   MR17  MR18  MR16
+## Correlation of (regression) scores with factors   0.74  0.62  0.56
+## Multiple R square of scores with factors          0.55  0.38  0.31
+## Minimum correlation of possible factor scores     0.10 -0.24 -0.38
+##                                                   MR19  MR21 MR23
+## Correlation of (regression) scores with factors   0.73  0.69 0.75
+## Multiple R square of scores with factors          0.54  0.48 0.56
+## Minimum correlation of possible factor scores     0.08 -0.04 0.12
+##                                                    MR20 MR26 MR27
+## Correlation of (regression) scores with factors    0.62 0.77 0.89
+## Multiple R square of scores with factors           0.39 0.60 0.80
+## Minimum correlation of possible factor scores     -0.23 0.20 0.60
+##                                                    MR24  MR22  MR25
+## Correlation of (regression) scores with factors    0.52  0.43  0.57
+## Multiple R square of scores with factors           0.27  0.19  0.32
+## Minimum correlation of possible factor scores     -0.47 -0.62 -0.35
 ##                                                   MR28
 ## Correlation of (regression) scores with factors      0
 ## Multiple R square of scores with factors             0
@@ -1118,74 +981,73 @@ library(tidyr) #to transform the df(e.g. unite)</code></pre>
 <p>After getting the number of factors that we should use for the analysis, then we adjust the analysis with 6 factors.</p>
 <pre class="r"><code>#Rerun the test with the significant factors found in the previous rule
 fa(cars_for_factor_analysis, nfactors = 6, rotate = &quot;oblimin&quot;)</code></pre>
-<pre><code>## Warning in fa.stats(r = r, f = f, phi = phi, n.obs =
-## n.obs, np.obs = np.obs, : The estimated weights for the
-## factor scores are probably incorrect. Try a different
-## factor score estimation method.</code></pre>
-<pre><code>## Warning in fac(r = r, nfactors = nfactors, n.obs = n.obs,
-## rotate = rotate, : An ultra-Heywood case was detected.
-## Examine the results carefully</code></pre>
+<pre><code>## Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs
+## = np.obs, : The estimated weights for the factor scores are probably
+## incorrect. Try a different factor score estimation method.</code></pre>
+<pre><code>## Warning in fac(r = r, nfactors = nfactors, n.obs = n.obs, rotate =
+## rotate, : An ultra-Heywood case was detected. Examine the results
+## carefully</code></pre>
 <pre><code>## Factor Analysis using method =  minres
 ## Call: fa(r = cars_for_factor_analysis, nfactors = 6, rotate = &quot;oblimin&quot;)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
-##                    MR5   MR1   MR3   MR6   MR2   MR4
-## transmission      0.22  0.51  0.15  0.05 -0.07  0.00
-## color            -0.04 -0.03 -0.01  0.17 -0.01  0.02
-## odometer_value    0.61 -0.14  0.24 -0.04 -0.05 -0.02
-## year_produced    -0.86  0.13  0.03 -0.15  0.07 -0.01
-## engine_fuel       0.01 -0.01  0.94 -0.01  0.00  0.00
-## engine_has_gas   -0.14  0.08  0.05  0.02 -0.02 -0.01
-## engine_type      -0.02  0.03  1.00  0.00  0.00  0.00
-## engine_capacity   0.20 -0.71  0.06  0.02  0.04  0.04
-## body_type         0.03  0.10  0.10  0.11 -0.06  0.03
-## has_warranty      0.03  0.01  0.00  0.02 -0.89  0.02
-## state            -0.01 -0.01 -0.01  0.01  0.83  0.01
-## drivetrain        0.24  0.12  0.07  0.03 -0.05  0.02
-## price_usd        -0.68 -0.29  0.09  0.07  0.19  0.03
-## is_exchangeable  -0.15  0.12 -0.01  0.02 -0.18 -0.08
-## location_region   0.22 -0.01  0.02 -0.02 -0.02  0.00
-## number_of_photos -0.24 -0.13  0.02  0.02  0.06  0.03
-## up_counter       -0.01  0.01  0.00  0.02  0.01  1.00
-## feature_0         0.04  0.02  0.01 -0.98  0.01  0.00
-## feature_1         0.18 -0.02 -0.01  0.63  0.06 -0.04
-## feature_2         0.05  0.59  0.00  0.10  0.03  0.00
-## feature_3         0.41  0.38 -0.02  0.08  0.12  0.01
-## feature_4        -0.03  0.68  0.04  0.12  0.00  0.00
-## feature_5         0.31  0.39  0.09  0.21  0.08  0.00
-## feature_6         0.36  0.45 -0.09 -0.04  0.12  0.01
-## feature_7         0.49  0.33 -0.03  0.03  0.15  0.00
-## feature_8         0.35  0.30 -0.04  0.28  0.09 -0.03
-## feature_9        -0.03  0.30  0.03  0.54 -0.01  0.00
-## duration_listed   0.04 -0.01  0.00 -0.06 -0.03  0.70
-##                     h2      u2 com
-## transmission     0.448  0.5524 1.6
-## color            0.022  0.9781 1.3
-## odometer_value   0.406  0.5944 1.4
-## year_produced    0.794  0.2060 1.1
-## engine_fuel      0.889  0.1108 1.0
-## engine_has_gas   0.019  0.9814 2.0
-## engine_type      1.001 -0.0006 1.0
-## engine_capacity  0.439  0.5607 1.2
-## body_type        0.046  0.9537 3.8
-## has_warranty     0.790  0.2097 1.0
-## state            0.703  0.2970 1.0
-## drivetrain       0.110  0.8902 1.9
-## price_usd        0.731  0.2687 1.6
-## is_exchangeable  0.048  0.9524 3.3
-## location_region  0.048  0.9515 1.1
-## number_of_photos 0.105  0.8947 1.7
-## up_counter       0.997  0.0026 1.0
-## feature_0        0.912  0.0884 1.0
-## feature_1        0.518  0.4822 1.2
-## feature_2        0.431  0.5689 1.1
-## feature_3        0.487  0.5133 2.3
-## feature_4        0.518  0.4818 1.1
-## feature_5        0.498  0.5022 2.7
-## feature_6        0.453  0.5474 2.2
-## feature_7        0.499  0.5006 2.0
-## feature_8        0.522  0.4777 3.1
-## feature_9        0.484  0.5156 1.6
-## duration_listed  0.493  0.5074 1.0
+##                    MR5   MR1   MR3   MR6   MR2   MR4    h2      u2
+## transmission      0.22  0.51  0.15  0.05 -0.07  0.00 0.448  0.5524
+## color            -0.04 -0.03 -0.01  0.17 -0.01  0.02 0.022  0.9781
+## odometer_value    0.61 -0.14  0.24 -0.04 -0.05 -0.02 0.406  0.5944
+## year_produced    -0.86  0.13  0.03 -0.15  0.07 -0.01 0.794  0.2060
+## engine_fuel       0.01 -0.01  0.94 -0.01  0.00  0.00 0.889  0.1108
+## engine_has_gas   -0.14  0.08  0.05  0.02 -0.02 -0.01 0.019  0.9814
+## engine_type      -0.02  0.03  1.00  0.00  0.00  0.00 1.001 -0.0006
+## engine_capacity   0.20 -0.71  0.06  0.02  0.04  0.04 0.439  0.5607
+## body_type         0.03  0.10  0.10  0.11 -0.06  0.03 0.046  0.9537
+## has_warranty      0.03  0.01  0.00  0.02 -0.89  0.02 0.790  0.2097
+## state            -0.01 -0.01 -0.01  0.01  0.83  0.01 0.703  0.2970
+## drivetrain        0.24  0.12  0.07  0.03 -0.05  0.02 0.110  0.8902
+## price_usd        -0.68 -0.29  0.09  0.07  0.19  0.03 0.731  0.2687
+## is_exchangeable  -0.15  0.12 -0.01  0.02 -0.18 -0.08 0.048  0.9524
+## location_region   0.22 -0.01  0.02 -0.02 -0.02  0.00 0.048  0.9515
+## number_of_photos -0.24 -0.13  0.02  0.02  0.06  0.03 0.105  0.8947
+## up_counter       -0.01  0.01  0.00  0.02  0.01  1.00 0.997  0.0026
+## feature_0         0.04  0.02  0.01 -0.98  0.01  0.00 0.912  0.0884
+## feature_1         0.18 -0.02 -0.01  0.63  0.06 -0.04 0.518  0.4822
+## feature_2         0.05  0.59  0.00  0.10  0.03  0.00 0.431  0.5689
+## feature_3         0.41  0.38 -0.02  0.08  0.12  0.01 0.487  0.5133
+## feature_4        -0.03  0.68  0.04  0.12  0.00  0.00 0.518  0.4818
+## feature_5         0.31  0.39  0.09  0.21  0.08  0.00 0.498  0.5022
+## feature_6         0.36  0.45 -0.09 -0.04  0.12  0.01 0.453  0.5474
+## feature_7         0.49  0.33 -0.03  0.03  0.15  0.00 0.499  0.5006
+## feature_8         0.35  0.30 -0.04  0.28  0.09 -0.03 0.522  0.4777
+## feature_9        -0.03  0.30  0.03  0.54 -0.01  0.00 0.484  0.5156
+## duration_listed   0.04 -0.01  0.00 -0.06 -0.03  0.70 0.493  0.5074
+##                  com
+## transmission     1.6
+## color            1.3
+## odometer_value   1.4
+## year_produced    1.1
+## engine_fuel      1.0
+## engine_has_gas   2.0
+## engine_type      1.0
+## engine_capacity  1.2
+## body_type        3.8
+## has_warranty     1.0
+## state            1.0
+## drivetrain       1.9
+## price_usd        1.6
+## is_exchangeable  3.3
+## location_region  1.1
+## number_of_photos 1.7
+## up_counter       1.0
+## feature_0        1.0
+## feature_1        1.2
+## feature_2        1.1
+## feature_3        2.3
+## feature_4        1.1
+## feature_5        2.7
+## feature_6        2.2
+## feature_7        2.0
+## feature_8        3.1
+## feature_9        1.6
+## duration_listed  1.0
 ## 
 ##                        MR5  MR1  MR3  MR6  MR2  MR4
 ## SS loadings           3.05 2.99 2.03 2.17 1.67 1.50
@@ -1231,13 +1093,12 @@ fa(cars_for_factor_analysis, nfactors = 6, rotate = &quot;oblimin&quot;)</code><
 </ul>
 <p>The following diagram shows the information of the factor loadings the items and the loadings that every factors have. In addition, the lines shows the correlations between the selected factors.</p>
 <pre class="r"><code>M1 &lt;- fa(cars_for_factor_analysis, nfactors = 6, rotate = &quot;oblimin&quot;)</code></pre>
-<pre><code>## Warning in fa.stats(r = r, f = f, phi = phi, n.obs =
-## n.obs, np.obs = np.obs, : The estimated weights for the
-## factor scores are probably incorrect. Try a different
-## factor score estimation method.</code></pre>
-<pre><code>## Warning in fac(r = r, nfactors = nfactors, n.obs = n.obs,
-## rotate = rotate, : An ultra-Heywood case was detected.
-## Examine the results carefully</code></pre>
+<pre><code>## Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs
+## = np.obs, : The estimated weights for the factor scores are probably
+## incorrect. Try a different factor score estimation method.</code></pre>
+<pre><code>## Warning in fac(r = r, nfactors = nfactors, n.obs = n.obs, rotate =
+## rotate, : An ultra-Heywood case was detected. Examine the results
+## carefully</code></pre>
 <pre class="r"><code>fa.diagram(M1, main=&quot;cars_for_factor_analysis&quot;)</code></pre>
 <p><img src="index_files/figure-html/factor%20analysis%20diagram-1.png" width="1248" /></p>
 <p><em>The factor analysis was based on the <a href="https://www.youtube.com/watch?v=VCpVcXf_wOk">R Tutorial</a> of Dr. Paul Christiansen, all the credits to him.</em></p>
