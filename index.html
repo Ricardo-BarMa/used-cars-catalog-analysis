@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Used cars catalog analysis</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Used cars catalog analysis</h1>
+
+</div>
+
+
+<div id="general-information" class="section level1">
+<h1>General information</h1>
+<p>The following project will show the analysis of a data set found in Kaggle which gather information of sold cars. The information was collected by Kirill Lepchenkov. He collected the information from ads publications about used cars that were published in different sites. The data was scraped from the Belarus county on the 2nd of December 2019. Please visit his contribution on <a href="https://www.kaggle.com/lepchenkov/usedcarscatalog">Kaggle</a>, there you will find more information about the data and also the data set.</p>
+</div>
+<div id="setting-up-my-environment" class="section level1">
+<h1>Setting up my environment</h1>
+<pre class="r"><code>cars &lt;- read.csv(&quot;~/OneDrive/Projects-Data/Cars/cars.csv&quot;)
+
+#Packages to create the factor analysis.
+library(GPArotation) #GPArotation implements Gradient Projection Algorithms and several rotation objective functions for factor analysis.
+library(psych) #Functions are primarily for multivariate analysis and scale construction using factor analysis, principal component analysis, cluster analysis and reliability analysis, although others provide basic descriptive statistics. 
+library(REdaS) #Statistic package
+
+#Packages to transform the data
+library(dplyr) #to transform the df (e.g. mutate)
+library(tidyr) #to transform the df(e.g. unite)</code></pre>
+</div>
+<div id="what-is-factor-analysis" class="section level1">
+<h1>What is factor analysis?</h1>
+<p>One of the first steps to do on an analysis is to reduce the number of data to have the most valuable data to be analyzed. The general purpose of factor analysis is to get the relationship of the data. In order to do the factor analysis is necessary to make different mathematical procedures for the simplification of the measures or to discover the patterns. The use of Factor Analysis is useful to reduce the variables by observing groups of variables.</p>
+<p>In order to consider something as a factor, it should contain at least three variables and if a factor contains 2 variables, then this should be interpreted with caution. The factors that contain 2 variables should be highly correlated with each another (r &gt;.70) and uncorrelated to other variables.</p>
+<p><em>Information from: Yong, A. G., &amp; Pearce, S. (2013) A Beginnerâ€™s Guide to Factor Analysis: Focusing on Exploratory Factor Analysis, Tutorials in Quantitative Methods for Psychology, 9(2), 79-94. doi: 10.20982/tqmp.09.2.p079</em></p>
+<p>The transformation of the data is important for the factor analysis, since the factor analysis only works with integers or floats and not with strings. The fact that the current data set contains strings makes impossible to use the data for the factor analysis. Therefore, the transformation is necessary.</p>
+<div id="a-glance-to-the-data" class="section level2">
+<h2>A glance to the data</h2>
+<p>The data set “used-cars-catalog” is composed by 30 columns and more than 30K rows.</p>
+<pre class="r"><code>glimpse(cars)</code></pre>
+<pre><code>## Rows: 38,531
+## Columns: 30
+## $ manufacturer_name &lt;chr&gt; &quot;Subaru&quot;, &quot;Subaru&quot;, &quot;Subaru&quot;, …
+## $ model_name        &lt;chr&gt; &quot;Outback&quot;, &quot;Outback&quot;, &quot;Foreste…
+## $ transmission      &lt;chr&gt; &quot;automatic&quot;, &quot;automatic&quot;, &quot;aut…
+## $ color             &lt;chr&gt; &quot;silver&quot;, &quot;blue&quot;, &quot;red&quot;, &quot;blue…
+## $ odometer_value    &lt;int&gt; 190000, 290000, 402000, 10000,…
+## $ year_produced     &lt;int&gt; 2010, 2002, 2001, 1999, 2001, …
+## $ engine_fuel       &lt;chr&gt; &quot;gasoline&quot;, &quot;gasoline&quot;, &quot;gasol…
+## $ engine_has_gas    &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fa…
+## $ engine_type       &lt;chr&gt; &quot;gasoline&quot;, &quot;gasoline&quot;, &quot;gasol…
+## $ engine_capacity   &lt;dbl&gt; 2.5, 3.0, 2.5, 3.0, 2.5, 2.5, …
+## $ body_type         &lt;chr&gt; &quot;universal&quot;, &quot;universal&quot;, &quot;suv…
+## $ has_warranty      &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fa…
+## $ state             &lt;chr&gt; &quot;owned&quot;, &quot;owned&quot;, &quot;owned&quot;, &quot;ow…
+## $ drivetrain        &lt;chr&gt; &quot;all&quot;, &quot;all&quot;, &quot;all&quot;, &quot;all&quot;, &quot;a…
+## $ price_usd         &lt;dbl&gt; 10900.00, 5000.00, 2800.00, 99…
+## $ is_exchangeable   &lt;chr&gt; &quot;False&quot;, &quot;True&quot;, &quot;True&quot;, &quot;True…
+## $ location_region   &lt;chr&gt; &quot;Минская обл.&quot;, &quot;Минская обл.&quot;…
+## $ number_of_photos  &lt;int&gt; 9, 12, 4, 9, 14, 20, 8, 7, 17,…
+## $ up_counter        &lt;int&gt; 13, 54, 72, 42, 7, 56, 147, 29…
+## $ feature_0         &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Tr…
+## $ feature_1         &lt;chr&gt; &quot;True&quot;, &quot;True&quot;, &quot;True&quot;, &quot;False…
+## $ feature_2         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fal…
+## $ feature_3         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fal…
+## $ feature_4         &lt;chr&gt; &quot;False&quot;, &quot;True&quot;, &quot;False&quot;, &quot;Fal…
+## $ feature_5         &lt;chr&gt; &quot;True&quot;, &quot;True&quot;, &quot;False&quot;, &quot;Fals…
+## $ feature_6         &lt;chr&gt; &quot;False&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fa…
+## $ feature_7         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;False&quot;, &quot;Fal…
+## $ feature_8         &lt;chr&gt; &quot;True&quot;, &quot;False&quot;, &quot;True&quot;, &quot;Fals…
+## $ feature_9         &lt;chr&gt; &quot;True&quot;, &quot;True&quot;, &quot;True&quot;, &quot;False…
+## $ duration_listed   &lt;int&gt; 16, 83, 151, 86, 7, 67, 307, 7…</code></pre>
+<p>In order to have only one name of the cars, the columns “manufacturer_name” and “model_name” were combined into cars to have a better an unique representation of the cars.</p>
+<pre class="r"><code>cars &lt;- cars %&gt;% 
+  unite(car, c(&quot;manufacturer_name&quot;, &quot;model_name&quot;))</code></pre>
+</div>
+<div id="transformation-of-the-data" class="section level2">
+<h2>Transformation of the data</h2>
+<p>To transform the data, it was necessary to observe the data and then provide a numerical representation of the data. The new values are not representative of their actual value or preference, rather is their correlation with the other variables what is more relevant after this transformation.</p>
+<div id="transmission" class="section level3">
+<h3>Transmission</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Group</th>
+<th align="center">Variable</th>
+<th align="right">Changed by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">transmission</td>
+<td align="center">automatic</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">transmission</td>
+<td align="center">mechanical</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">transmission</td>
+<td align="center">NA</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="color" class="section level3">
+<h3>Color</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Group</th>
+<th align="center">Variable</th>
+<th align="right">Changed by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">color</td>
+<td align="center">silver</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">color</td>
+<td align="center">blue</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">color</td>
+<td align="center">red</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">color</td>
+<td align="center">black</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">color</td>
+<td align="center">grey</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">color</td>
+<td align="center">other</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">color</td>
+<td align="center">brown</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">color</td>
+<td align="center">white</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">color</td>
+<td align="center">green</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">color</td>
+<td align="center">violet</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">color</td>
+<td align="center">orange</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">color</td>
+<td align="center">yellow</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">color</td>
+<td align="center">NA</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="engine-fuel" class="section level3">
+<h3>Engine fuel</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Group</th>
+<th align="center">Variable</th>
+<th align="right">Changed by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">engine fuel</td>
+<td align="center">gasoline</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">engine fuel</td>
+<td align="center">gas</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">engine fuel</td>
+<td align="center">diesel</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">engine fuel</td>
+<td align="center">hybrid-petrol</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">engine fuel</td>
+<td align="center">hybrid-diesel</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">engine fuel</td>
+<td align="center">hybrid</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">engine fuel</td>
+<td align="center">NA</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="engine-type" class="section level3">
+<h3>Engine type</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Group</th>
+<th align="center">Variable</th>
+<th align="right">Changed by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">engine type</td>
+<td align="center">gasoline</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">engine type</td>
+<td align="center">diesel</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">engine type</td>
+<td align="center">electric</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">engine type</td>
+<td align="center">NA</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="body-type" class="section level3">
+<h3>Body type</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Group</th>
+<th align="center">Variable</th>
+<th align="right">Changed by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">body type</td>
+<td align="center">universal</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">body type</td>
+<td align="center">suv</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">body type</td>
+<td align="center">sedan</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">body type</td>
+<td align="center">hatchback</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">body type</td>
+<td align="center">liftback</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">body type</td>
+<td align="center">minivan</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">body type</td>
+<td align="center">minibus</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">body type</td>
+<td align="center">van</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">body type</td>
+<td align="center">pickup</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">body type</td>
+<td align="center">coupe</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">body type</td>
+<td align="center">cabriolet</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">body type</td>
+<td align="center">limousine</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">body type</td>
+<td align="center">NA</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="state" class="section level3">
+<h3>State</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Group</th>
+<th align="center">Variable</th>
+<th align="right">Changed by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">state</td>
+<td align="center">owned</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">state</td>
+<td align="center">emergency</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">state</td>
+<td align="center">new</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">state</td>
+<td align="center">NA</td>
+<td align="right">4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="drivetrain" class="section level3">
+<h3>Drivetrain</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Group</th>
+<th align="center">Variable</th>
+<th align="right">Changed by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">drivetrain</td>
+<td align="center">all</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">drivetrain</td>
+<td align="center">front</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">drivetrain</td>
+<td align="center">rear</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">drivetrain</td>
+<td align="center">NA</td>
+<td align="right">4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="location-region" class="section level3">
+<h3>Location region</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Group</th>
+<th align="center">Variable</th>
+<th align="right">Changed by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">location region</td>
+<td align="center">Минская обл.</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">location region</td>
+<td align="center">Гомельская обл.</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">location region</td>
+<td align="center">Брестская обл.</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">location region</td>
+<td align="center">Могилевская обл.</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">location region</td>
+<td align="center">Витебская обл.</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">location region</td>
+<td align="center">Гродненская обл.</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">location region</td>
+<td align="center">NA</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="engine-capacity" class="section level3">
+<h3>Engine capacity</h3>
+<p>For the variable engine capacity, there were ten rows that did not have any information about the variable, and these were transformed from <strong><em>NA</em></strong> to <em>0</em>.</p>
+</div>
+<div id="other-values" class="section level3">
+<h3>Other values</h3>
+<p>There were other variables that had Boolean values, these were transformed as <strong><em>True</em></strong> <em>(1)</em> and <strong><em>False</em></strong> <em>(2)</em>. In this case the same value was given to the NA values, this means <strong><em>NA</em></strong> = <em>0</em>.</p>
+</div>
+</div>
+<div id="how-was-the-data-transformed" class="section level2">
+<h2>How was the data transformed?</h2>
+<p>In order to transform the data the function mutate was used. Example:</p>
+<p>In addition, the different values were gotten with the function unique.</p>
+<pre class="r"><code>unique(cars$transmission)</code></pre>
+<pre><code>## [1] &quot;automatic&quot;  &quot;mechanical&quot;</code></pre>
+</div>
+</div>
+<div id="factor-analysis" class="section level1">
+<h1>Factor analysis</h1>
+<p>For the factor analysis one extra change was done. As it was explained before, it is necessary to only use the values in the analysis and do not consider some strings or characters. Therefore, for the analysis the new column car was removed to have only a subset with values.</p>
+<pre class="r"><code>cars_for_factor_analysis &lt;- subset(cars, select = -car)</code></pre>
+<div id="is-the-factor-analysis-significant" class="section level2">
+<h2>Is the factor analysis significant?</h2>
+</div>
+<div id="bartletts-test-of-spherecity" class="section level2">
+<h2>Bartletts test of spherecity</h2>
+<p>The first step of the factor analysis is to understand if the analysis makes sense. This can be seen with the p-value. In general we want to have the Bartletts test of spherecity to be significant. In this case the p-value is highly significant.</p>
+<pre class="r"><code>bart_spher(cars_for_factor_analysis)</code></pre>
+<pre><code>## 
+##  Bartlett&#39;s Test of Sphericity
+## 
+## Call: bart_spher(x = cars_for_factor_analysis)
+## 
+##      X2 = 471200.97
+##      df = 378
+## p-value &lt; 2.22e-16</code></pre>
+</div>
+<div id="kmo" class="section level2">
+<h2>KMO</h2>
+<p>For the measure Kaiser-Meyer-Olkin we want to have a value over .7 in the overall MSA.</p>
+<pre class="r"><code>KMO(cars_for_factor_analysis)</code></pre>
+<pre><code>## Kaiser-Meyer-Olkin factor adequacy
+## Call: KMO(r = cars_for_factor_analysis)
+## Overall MSA =  0.8
+## MSA for each item = 
+##     transmission            color   odometer_value 
+##             0.93             0.73             0.91 
+##    year_produced      engine_fuel   engine_has_gas 
+##             0.84             0.44             0.07 
+##      engine_type  engine_capacity        body_type 
+##             0.44             0.77             0.76 
+##     has_warranty            state       drivetrain 
+##             0.62             0.61             0.87 
+##        price_usd  is_exchangeable  location_region 
+##             0.87             0.61             0.92 
+## number_of_photos       up_counter        feature_0 
+##             0.90             0.51             0.79 
+##        feature_1        feature_2        feature_3 
+##             0.83             0.95             0.96 
+##        feature_4        feature_5        feature_6 
+##             0.93             0.96             0.92 
+##        feature_7        feature_8        feature_9 
+##             0.93             0.96             0.87 
+##  duration_listed 
+##             0.51</code></pre>
+<p>As it could be observed in the two previous test the values are acceptable and the factor analysis can be performed. The sampling adequacy was acceptable and the Bartlett’s test of sphericity demonstrate that correlations between items were enough for FA(<span class="math inline">\(X^{2}\)</span>(378) = 471200.97, p&lt; .001).</p>
+</div>
+<div id="kaisers-rule" class="section level2">
+<h2>Kaiser’s rule</h2>
+<p>The first step is to observe how many factors there are that we can use for our future analysis. The following analysis is based on the Kaiser’s rule. For this we are going to do the factor analysis in our new subset with all the transformed values and then we are going to consider all the variables or all the factors of the subset. In addition, the rotation method that is going to be implemented in this analysis will be the default rotation method called <em>oblimin</em>. For this analysis the selection of the oblimin method is based on the assumption that there is going to be a correlation between factors. For instance, there could be a strong correlation between engine type and engine fuel.</p>
+<pre class="r"><code>fa(cars_for_factor_analysis, nfactors = 28, rotate = &quot;oblimin&quot;) #6 values greather than 1 based on Karses rule</code></pre>
+<pre><code>## Warning in GPFoblq(L, Tmat = Tmat, normalize = normalize,
+## eps = eps, maxit = maxit, : convergence not obtained in
+## GPFoblq. 1000 iterations used.</code></pre>
+<pre><code>## Factor Analysis using method =  minres
+## Call: fa(r = cars_for_factor_analysis, nfactors = 28, rotate = &quot;oblimin&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##                    MR3   MR2   MR4   MR6   MR1   MR7
+## transmission      0.00  0.00  0.00  0.00  0.00 -0.01
+## color            -0.01 -0.01  0.01  0.00 -0.01 -0.06
+## odometer_value    0.11 -0.06 -0.01  0.01  0.03 -0.12
+## year_produced     0.00  0.00  0.00  0.00  0.00  0.93
+## engine_fuel       1.00  0.00  0.00  0.00 -0.01 -0.03
+## engine_has_gas    0.00  0.00  0.00 -0.01 -0.01 -0.03
+## engine_type       0.96  0.00  0.00  0.00  0.01  0.03
+## engine_capacity   0.00 -0.01  0.00  0.00  0.00 -0.02
+## body_type         0.00 -0.01  0.00  0.01  0.00  0.02
+## has_warranty      0.00 -0.88  0.01 -0.01  0.00 -0.02
+## state             0.00  0.88  0.01 -0.01  0.00 -0.02
+## drivetrain        0.00  0.00  0.01  0.01  0.02 -0.06
+## price_usd         0.05  0.10  0.01  0.00 -0.08  0.19
+## is_exchangeable   0.00 -0.06 -0.04  0.02 -0.01  0.02
+## location_region   0.03 -0.03  0.00  0.00  0.00 -0.08
+## number_of_photos -0.01 -0.02  0.00  0.01 -0.01 -0.01
+## up_counter        0.00  0.00  0.85  0.00  0.00  0.01
+## feature_0         0.00 -0.01  0.00  0.90 -0.01  0.01
+## feature_1        -0.01  0.03 -0.02 -0.36  0.00 -0.09
+## feature_2         0.00  0.01  0.00 -0.03  0.06  0.01
+## feature_3        -0.02  0.03  0.00  0.00  0.13 -0.04
+## feature_4         0.00  0.00  0.00  0.01  0.01 -0.01
+## feature_5         0.02  0.00  0.00 -0.05  0.02 -0.03
+## feature_6        -0.02 -0.01  0.00  0.00  0.73  0.00
+## feature_7         0.01  0.01  0.00 -0.01  0.74 -0.02
+## feature_8        -0.03  0.03 -0.01  0.00  0.12 -0.07
+## feature_9         0.01  0.02  0.00 -0.43  0.02  0.00
+## duration_listed   0.00  0.00  0.85  0.00  0.00 -0.02
+##                    MR5  MR13  MR14   MR8   MR9  MR11
+## transmission     -0.02  0.76  0.01 -0.02  0.01  0.00
+## color            -0.04 -0.01 -0.02 -0.02  0.07  0.00
+## odometer_value    0.07  0.05 -0.03 -0.02  0.02  0.02
+## year_produced    -0.01 -0.01  0.00 -0.01  0.00 -0.01
+## engine_fuel      -0.04 -0.04  0.00 -0.11  0.01 -0.01
+## engine_has_gas   -0.05 -0.03  0.00  0.69  0.01 -0.01
+## engine_type       0.05  0.05  0.00  0.13 -0.01  0.01
+## engine_capacity   0.83 -0.02 -0.01 -0.03  0.01 -0.01
+## body_type         0.02  0.00  0.00  0.01  0.60 -0.01
+## has_warranty      0.00  0.00  0.00 -0.01  0.00  0.00
+## state            -0.01 -0.01  0.00 -0.01  0.00  0.00
+## drivetrain       -0.05  0.04  0.02  0.01  0.21  0.06
+## price_usd         0.10 -0.06 -0.03  0.06  0.01 -0.02
+## is_exchangeable  -0.03  0.01 -0.06  0.00  0.00 -0.02
+## location_region  -0.06  0.05  0.00 -0.08  0.00 -0.02
+## number_of_photos -0.02 -0.02 -0.02 -0.02  0.00 -0.01
+## up_counter        0.01  0.00  0.00  0.01  0.00  0.00
+## feature_0         0.00 -0.01  0.00 -0.01 -0.01 -0.02
+## feature_1        -0.02  0.03  0.04  0.00  0.02  0.01
+## feature_2        -0.08  0.04  0.17 -0.01  0.04  0.05
+## feature_3         0.02  0.09  0.02  0.04  0.02  0.12
+## feature_4        -0.01  0.01  0.75  0.00  0.00  0.02
+## feature_5        -0.04  0.04  0.07 -0.02  0.02  0.58
+## feature_6        -0.04 -0.01  0.03 -0.02  0.00 -0.02
+## feature_7         0.02  0.03  0.00  0.01  0.01  0.04
+## feature_8        -0.03  0.04  0.02 -0.01  0.04  0.23
+## feature_9        -0.04  0.04  0.09 -0.02  0.04  0.00
+## duration_listed   0.00  0.00 -0.01 -0.01  0.00  0.00
+##                   MR10  MR15  MR12  MR17  MR18  MR16
+## transmission      0.00  0.00  0.00  0.00  0.00  0.01
+## color            -0.03  0.00  0.14  0.32  0.04 -0.04
+## odometer_value   -0.03 -0.02 -0.06 -0.03 -0.05  0.07
+## year_produced     0.00  0.00  0.00  0.00  0.00  0.00
+## engine_fuel      -0.01  0.01 -0.02  0.00 -0.01  0.01
+## engine_has_gas    0.00  0.00  0.00  0.00  0.00  0.00
+## engine_type       0.01 -0.01  0.02  0.00  0.01 -0.01
+## engine_capacity  -0.01  0.00  0.00  0.00  0.00  0.00
+## body_type         0.01 -0.01 -0.01  0.01  0.01  0.00
+## has_warranty     -0.01  0.00  0.00  0.00  0.01  0.00
+## state            -0.01  0.00  0.00  0.00  0.01  0.00
+## drivetrain       -0.03  0.01  0.04 -0.06 -0.31  0.02
+## price_usd         0.15 -0.05 -0.02  0.24 -0.05  0.03
+## is_exchangeable  -0.13 -0.03  0.06 -0.01  0.02  0.31
+## location_region  -0.08  0.05  0.06 -0.05 -0.01 -0.24
+## number_of_photos  0.56  0.01  0.01 -0.01  0.00  0.00
+## up_counter        0.05 -0.01  0.00 -0.01  0.01  0.00
+## feature_0         0.01  0.00 -0.02  0.01  0.00  0.00
+## feature_1         0.01 -0.03  0.31  0.02  0.00  0.02
+## feature_2         0.00  0.33  0.04 -0.03  0.14  0.12
+## feature_3        -0.02  0.34 -0.05  0.03 -0.04 -0.01
+## feature_4        -0.01  0.00  0.01  0.00  0.00  0.00
+## feature_5        -0.01  0.02  0.00  0.00 -0.01  0.02
+## feature_6        -0.01  0.04  0.00  0.03 -0.03  0.02
+## feature_7         0.00 -0.02  0.00 -0.03  0.04 -0.01
+## feature_8        -0.07  0.04  0.02  0.02  0.21 -0.01
+## feature_9        -0.01  0.03 -0.22  0.09  0.06  0.03
+## duration_listed  -0.05  0.01  0.00  0.01 -0.01  0.00
+##                   MR19  MR21  MR23  MR20  MR26  MR27
+## transmission      0.00  0.00  0.00 -0.01  0.00  0.00
+## color            -0.09  0.00 -0.04  0.03 -0.03  0.00
+## odometer_value   -0.09  0.30  0.01  0.18  0.08  0.03
+## year_produced     0.00  0.00  0.00  0.00  0.00  0.00
+## engine_fuel       0.00  0.00  0.02 -0.02 -0.01 -0.02
+## engine_has_gas    0.00 -0.01 -0.01  0.00  0.00  0.00
+## engine_type       0.00  0.01 -0.03  0.02  0.01  0.02
+## engine_capacity   0.00  0.00  0.00  0.00  0.00  0.00
+## body_type         0.02  0.01 -0.01 -0.02  0.00 -0.01
+## has_warranty      0.01  0.02 -0.01 -0.03  0.01  0.00
+## state             0.01  0.02 -0.01 -0.03  0.01  0.00
+## drivetrain       -0.12 -0.07  0.02  0.15 -0.05  0.05
+## price_usd         0.26 -0.04  0.10 -0.05 -0.10 -0.11
+## is_exchangeable   0.11 -0.10 -0.06  0.02  0.09 -0.05
+## location_region   0.17  0.03 -0.06  0.10  0.07  0.00
+## number_of_photos  0.00 -0.01 -0.02  0.01  0.01 -0.01
+## up_counter       -0.03 -0.02  0.00 -0.04 -0.01  0.00
+## feature_0         0.01 -0.01 -0.01  0.00 -0.01  0.00
+## feature_1         0.02  0.01  0.17 -0.01  0.06  0.12
+## feature_2         0.05  0.00 -0.04  0.04 -0.07  0.08
+## feature_3        -0.05  0.03  0.09 -0.06  0.18  0.03
+## feature_4         0.00  0.00  0.01  0.00  0.01  0.00
+## feature_5         0.00  0.02 -0.01  0.00  0.02  0.05
+## feature_6        -0.02 -0.03 -0.03 -0.01  0.03  0.00
+## feature_7         0.01  0.04  0.03  0.01 -0.01  0.02
+## feature_8        -0.03 -0.08  0.18  0.09  0.11  0.04
+## feature_9         0.01 -0.11 -0.03  0.08  0.06  0.14
+## duration_listed   0.03  0.02  0.00  0.03  0.01  0.00
+##                   MR24  MR22  MR25 MR28    h2    u2 com
+## transmission      0.00  0.00  0.00    0 0.634 0.366 1.0
+## color             0.00  0.02  0.02    0 0.095 0.905 2.0
+## odometer_value    0.06  0.04  0.05    0 0.456 0.544 4.1
+## year_produced     0.00  0.00  0.00    0 0.880 0.120 1.0
+## engine_fuel       0.00  0.00  0.01    0 0.995 0.005 1.0
+## engine_has_gas    0.00  0.00 -0.01    0 0.477 0.523 1.0
+## engine_type       0.00  0.01 -0.01    0 0.995 0.005 1.1
+## engine_capacity   0.00  0.00  0.00    0 0.728 0.272 1.0
+## body_type         0.00 -0.01  0.00    0 0.332 0.668 1.0
+## has_warranty     -0.05  0.08 -0.03    0 0.794 0.206 1.0
+## state            -0.05  0.08 -0.03    0 0.782 0.218 1.0
+## drivetrain       -0.03  0.07 -0.01    0 0.382 0.618 3.7
+## price_usd         0.01  0.00 -0.03    0 0.893 0.107 6.8
+## is_exchangeable  -0.09 -0.03 -0.01    0 0.217 0.783 3.1
+## location_region   0.04  0.03  0.03    0 0.136 0.864 4.8
+## number_of_photos -0.02  0.00  0.00    0 0.297 0.703 1.0
+## up_counter        0.05  0.08  0.06    0 0.757 0.243 1.1
+## feature_0         0.00  0.00 -0.01    0 0.882 0.118 1.0
+## feature_1         0.07  0.02  0.05    0 0.699 0.301 3.2
+## feature_2         0.06  0.02 -0.03    0 0.522 0.478 3.3
+## feature_3         0.01 -0.02  0.05    0 0.591 0.409 3.1
+## feature_4         0.00  0.00  0.00    0 0.609 0.391 1.0
+## feature_5         0.04  0.01  0.01    0 0.616 0.384 1.1
+## feature_6         0.07  0.01 -0.07    0 0.638 0.362 1.1
+## feature_7        -0.06 -0.01  0.07    0 0.668 0.332 1.1
+## feature_8         0.02  0.03  0.00    0 0.603 0.397 6.0
+## feature_9        -0.05  0.02  0.06    0 0.658 0.342 2.6
+## duration_listed  -0.05 -0.08 -0.06    0 0.750 0.250 1.1
+## 
+##                        MR3  MR2  MR4  MR6  MR1  MR7  MR5
+## SS loadings           1.97 1.61 1.46 1.42 1.43 1.23 0.86
+## Proportion Var        0.07 0.06 0.05 0.05 0.05 0.04 0.03
+## Cumulative Var        0.07 0.13 0.18 0.23 0.28 0.33 0.36
+## Proportion Explained  0.12 0.09 0.09 0.08 0.08 0.07 0.05
+## Cumulative Proportion 0.12 0.21 0.30 0.38 0.46 0.53 0.58
+##                       MR13 MR14  MR8  MR9 MR11 MR10 MR15
+## SS loadings           0.84 0.85 0.53 0.49 0.76 0.49 0.46
+## Proportion Var        0.03 0.03 0.02 0.02 0.03 0.02 0.02
+## Cumulative Var        0.39 0.42 0.44 0.45 0.48 0.50 0.51
+## Proportion Explained  0.05 0.05 0.03 0.03 0.04 0.03 0.03
+## Cumulative Proportion 0.63 0.68 0.71 0.74 0.79 0.82 0.84
+##                       MR12 MR17 MR18 MR16 MR19 MR21 MR23
+## SS loadings           0.22 0.25 0.24 0.21 0.26 0.21 0.20
+## Proportion Var        0.01 0.01 0.01 0.01 0.01 0.01 0.01
+## Cumulative Var        0.52 0.53 0.54 0.55 0.56 0.56 0.57
+## Proportion Explained  0.01 0.01 0.01 0.01 0.02 0.01 0.01
+## Cumulative Proportion 0.86 0.87 0.89 0.90 0.91 0.92 0.94
+##                       MR20 MR26 MR27 MR24 MR22 MR25 MR28
+## SS loadings           0.19 0.31 0.36 0.09 0.05 0.08 0.00
+## Proportion Var        0.01 0.01 0.01 0.00 0.00 0.00 0.00
+## Cumulative Var        0.58 0.59 0.60 0.61 0.61 0.61 0.61
+## Proportion Explained  0.01 0.02 0.02 0.01 0.00 0.00 0.00
+## Cumulative Proportion 0.95 0.97 0.99 0.99 1.00 1.00 1.00
+## 
+##  With factor correlations of 
+##        MR3   MR2   MR4   MR6   MR1   MR7   MR5  MR13
+## MR3   1.00 -0.06  0.00  0.01 -0.10  0.03  0.12  0.16
+## MR2  -0.06  1.00 -0.03 -0.20  0.05  0.23 -0.06 -0.09
+## MR4   0.00 -0.03  1.00  0.05 -0.04 -0.01  0.10 -0.05
+## MR6   0.01 -0.20  0.05  1.00 -0.30  0.34  0.16 -0.28
+## MR1  -0.10  0.05 -0.04 -0.30  1.00 -0.51 -0.33  0.50
+## MR7   0.03  0.23 -0.01  0.34 -0.51  1.00  0.02 -0.51
+## MR5   0.12 -0.06  0.10  0.16 -0.33  0.02  1.00 -0.60
+## MR13  0.16 -0.09 -0.05 -0.28  0.50 -0.51 -0.60  1.00
+## MR14 -0.01  0.08 -0.08 -0.39  0.56 -0.20 -0.67  0.66
+## MR8   0.06  0.04 -0.01  0.02 -0.06  0.13 -0.05  0.05
+## MR9   0.13 -0.08  0.02 -0.23  0.26 -0.20 -0.07  0.35
+## MR11  0.06  0.12 -0.05 -0.41  0.56 -0.52 -0.31  0.58
+## MR10  0.05  0.19  0.05  0.12 -0.37  0.49  0.24 -0.40
+## MR15 -0.11  0.07 -0.01 -0.15  0.57 -0.22 -0.36  0.35
+## MR12 -0.06  0.03 -0.05 -0.19 -0.04 -0.20 -0.05  0.02
+## MR17  0.04  0.25  0.03 -0.22 -0.15  0.36  0.16 -0.17
+## MR18 -0.07  0.03 -0.05 -0.24  0.25 -0.03 -0.10  0.13
+## MR16  0.10 -0.09 -0.10 -0.17  0.17 -0.01 -0.25  0.19
+## MR19  0.07  0.17  0.00  0.00 -0.28  0.50  0.18 -0.23
+## MR21  0.24 -0.14  0.04  0.17  0.09 -0.40  0.34  0.10
+## MR23  0.00  0.27 -0.04 -0.43  0.20 -0.26  0.07  0.09
+## MR20  0.19 -0.11 -0.05 -0.16  0.15 -0.41  0.04  0.26
+## MR26 -0.03 -0.15 -0.09 -0.39  0.58 -0.57 -0.14  0.51
+## MR27  0.00  0.02 -0.05 -0.72  0.50 -0.63 -0.31  0.60
+## MR24  0.03  0.03 -0.04 -0.09  0.22 -0.13 -0.05  0.16
+## MR22  0.05  0.04  0.05 -0.18  0.08 -0.15 -0.03  0.07
+## MR25  0.07  0.00 -0.06 -0.35  0.13 -0.25  0.12  0.16
+## MR28  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+##       MR14   MR8   MR9  MR11  MR10  MR15  MR12  MR17
+## MR3  -0.01  0.06  0.13  0.06  0.05 -0.11 -0.06  0.04
+## MR2   0.08  0.04 -0.08  0.12  0.19  0.07  0.03  0.25
+## MR4  -0.08 -0.01  0.02 -0.05  0.05 -0.01 -0.05  0.03
+## MR6  -0.39  0.02 -0.23 -0.41  0.12 -0.15 -0.19 -0.22
+## MR1   0.56 -0.06  0.26  0.56 -0.37  0.57 -0.04 -0.15
+## MR7  -0.20  0.13 -0.20 -0.52  0.49 -0.22 -0.20  0.36
+## MR5  -0.67 -0.05 -0.07 -0.31  0.24 -0.36 -0.05  0.16
+## MR13  0.66  0.05  0.35  0.58 -0.40  0.35  0.02 -0.17
+## MR14  1.00 -0.02  0.30  0.68 -0.22  0.52 -0.06  0.01
+## MR8  -0.02  1.00 -0.03 -0.04  0.15 -0.10  0.08  0.06
+## MR9   0.30 -0.03  1.00  0.39 -0.16  0.18  0.03  0.10
+## MR11  0.68 -0.04  0.39  1.00 -0.26  0.42  0.03 -0.07
+## MR10 -0.22  0.15 -0.16 -0.26  1.00 -0.20 -0.01  0.26
+## MR15  0.52 -0.10  0.18  0.42 -0.20  1.00 -0.14 -0.04
+## MR12 -0.06  0.08  0.03  0.03 -0.01 -0.14  1.00 -0.08
+## MR17  0.01  0.06  0.10 -0.07  0.26 -0.04 -0.08  1.00
+## MR18  0.26 -0.01 -0.18  0.22 -0.08  0.20 -0.06  0.07
+## MR16  0.31 -0.01  0.18  0.21 -0.16  0.19 -0.01  0.06
+## MR19 -0.11  0.04 -0.16 -0.19  0.17 -0.13  0.04  0.39
+## MR21 -0.15 -0.08 -0.10  0.11 -0.10 -0.04  0.10 -0.30
+## MR23  0.05 -0.16  0.15  0.39  0.13  0.03  0.34  0.22
+## MR20  0.05  0.04  0.31  0.19 -0.32  0.03 -0.08 -0.13
+## MR26  0.26  0.01  0.03  0.49 -0.49  0.36  0.00 -0.10
+## MR27  0.59  0.07  0.32  0.57 -0.29  0.37  0.06 -0.13
+## MR24  0.31 -0.05  0.02  0.16  0.20  0.22  0.22  0.02
+## MR22  0.09  0.05  0.15  0.08  0.16  0.01  0.03 -0.05
+## MR25  0.04 -0.12  0.07  0.22  0.19 -0.02 -0.03 -0.12
+## MR28  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+##       MR18  MR16  MR19  MR21  MR23  MR20  MR26  MR27
+## MR3  -0.07  0.10  0.07  0.24  0.00  0.19 -0.03  0.00
+## MR2   0.03 -0.09  0.17 -0.14  0.27 -0.11 -0.15  0.02
+## MR4  -0.05 -0.10  0.00  0.04 -0.04 -0.05 -0.09 -0.05
+## MR6  -0.24 -0.17  0.00  0.17 -0.43 -0.16 -0.39 -0.72
+## MR1   0.25  0.17 -0.28  0.09  0.20  0.15  0.58  0.50
+## MR7  -0.03 -0.01  0.50 -0.40 -0.26 -0.41 -0.57 -0.63
+## MR5  -0.10 -0.25  0.18  0.34  0.07  0.04 -0.14 -0.31
+## MR13  0.13  0.19 -0.23  0.10  0.09  0.26  0.51  0.60
+## MR14  0.26  0.31 -0.11 -0.15  0.05  0.05  0.26  0.59
+## MR8  -0.01 -0.01  0.04 -0.08 -0.16  0.04  0.01  0.07
+## MR9  -0.18  0.18 -0.16 -0.10  0.15  0.31  0.03  0.32
+## MR11  0.22  0.21 -0.19  0.11  0.39  0.19  0.49  0.57
+## MR10 -0.08 -0.16  0.17 -0.10  0.13 -0.32 -0.49 -0.29
+## MR15  0.20  0.19 -0.13 -0.04  0.03  0.03  0.36  0.37
+## MR12 -0.06 -0.01  0.04  0.10  0.34 -0.08  0.00  0.06
+## MR17  0.07  0.06  0.39 -0.30  0.22 -0.13 -0.10 -0.13
+## MR18  1.00  0.10  0.16 -0.08  0.10 -0.08  0.21  0.23
+## MR16  0.10  1.00  0.06 -0.14  0.01  0.06  0.15  0.15
+## MR19  0.16  0.06  1.00 -0.14  0.07 -0.20 -0.22 -0.36
+## MR21 -0.08 -0.14 -0.14  1.00  0.05  0.09  0.14 -0.02
+## MR23  0.10  0.01  0.07  0.05  1.00 -0.04  0.23  0.20
+## MR20 -0.08  0.06 -0.20  0.09 -0.04  1.00  0.20  0.36
+## MR26  0.21  0.15 -0.22  0.14  0.23  0.20  1.00  0.50
+## MR27  0.23  0.15 -0.36 -0.02  0.20  0.36  0.50  1.00
+## MR24  0.02 -0.03 -0.21  0.07  0.18 -0.03  0.11  0.15
+## MR22  0.01  0.00 -0.20  0.00  0.03 -0.08  0.04  0.19
+## MR25  0.20 -0.08 -0.21  0.06  0.30  0.07  0.17  0.26
+## MR28  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+##       MR24  MR22  MR25 MR28
+## MR3   0.03  0.05  0.07    0
+## MR2   0.03  0.04  0.00    0
+## MR4  -0.04  0.05 -0.06    0
+## MR6  -0.09 -0.18 -0.35    0
+## MR1   0.22  0.08  0.13    0
+## MR7  -0.13 -0.15 -0.25    0
+## MR5  -0.05 -0.03  0.12    0
+## MR13  0.16  0.07  0.16    0
+## MR14  0.31  0.09  0.04    0
+## MR8  -0.05  0.05 -0.12    0
+## MR9   0.02  0.15  0.07    0
+## MR11  0.16  0.08  0.22    0
+## MR10  0.20  0.16  0.19    0
+## MR15  0.22  0.01 -0.02    0
+## MR12  0.22  0.03 -0.03    0
+## MR17  0.02 -0.05 -0.12    0
+## MR18  0.02  0.01  0.20    0
+## MR16 -0.03  0.00 -0.08    0
+## MR19 -0.21 -0.20 -0.21    0
+## MR21  0.07  0.00  0.06    0
+## MR23  0.18  0.03  0.30    0
+## MR20 -0.03 -0.08  0.07    0
+## MR26  0.11  0.04  0.17    0
+## MR27  0.15  0.19  0.26    0
+## MR24  1.00  0.08  0.20    0
+## MR22  0.08  1.00  0.15    0
+## MR25  0.20  0.15  1.00    0
+## MR28  0.00  0.00  0.00    1
+## 
+## Mean item complexity =  2.2
+## Test of the hypothesis that 28 factors are sufficient.
+## 
+## The degrees of freedom for the null model are  378  and the objective function was  12.23 with Chi Square of  471201
+## The degrees of freedom for the model are -28  and the objective function was  0 
+## 
+## The root mean square of the residuals (RMSR) is  0 
+## The df corrected root mean square of the residuals is  NA 
+## 
+## The harmonic number of observations is  38531 with the empirical chi square  0  with prob &lt;  NA 
+## The total number of observations was  38531  with Likelihood Chi Square =  0  with prob &lt;  NA 
+## 
+## Tucker Lewis Index of factoring reliability =  1.001
+## Fit based upon off diagonal values = 1
+## Measures of factor score adequacy             
+##                                                    MR3
+## Correlation of (regression) scores with factors   1.00
+## Multiple R square of scores with factors          1.00
+## Minimum correlation of possible factor scores     0.99
+##                                                    MR2
+## Correlation of (regression) scores with factors   0.94
+## Multiple R square of scores with factors          0.88
+## Minimum correlation of possible factor scores     0.77
+##                                                    MR4
+## Correlation of (regression) scores with factors   0.92
+## Multiple R square of scores with factors          0.86
+## Minimum correlation of possible factor scores     0.71
+##                                                    MR6
+## Correlation of (regression) scores with factors   0.95
+## Multiple R square of scores with factors          0.90
+## Minimum correlation of possible factor scores     0.80
+##                                                    MR1
+## Correlation of (regression) scores with factors   0.91
+## Multiple R square of scores with factors          0.82
+## Minimum correlation of possible factor scores     0.64
+##                                                    MR7
+## Correlation of (regression) scores with factors   0.96
+## Multiple R square of scores with factors          0.91
+## Minimum correlation of possible factor scores     0.83
+##                                                    MR5
+## Correlation of (regression) scores with factors   0.89
+## Multiple R square of scores with factors          0.80
+## Minimum correlation of possible factor scores     0.60
+##                                                   MR13
+## Correlation of (regression) scores with factors   0.89
+## Multiple R square of scores with factors          0.79
+## Minimum correlation of possible factor scores     0.59
+##                                                   MR14
+## Correlation of (regression) scores with factors   0.89
+## Multiple R square of scores with factors          0.79
+## Minimum correlation of possible factor scores     0.58
+##                                                    MR8
+## Correlation of (regression) scores with factors   0.92
+## Multiple R square of scores with factors          0.86
+## Minimum correlation of possible factor scores     0.71
+##                                                    MR9
+## Correlation of (regression) scores with factors   0.71
+## Multiple R square of scores with factors          0.50
+## Minimum correlation of possible factor scores     0.01
+##                                                   MR11
+## Correlation of (regression) scores with factors   0.85
+## Multiple R square of scores with factors          0.73
+## Minimum correlation of possible factor scores     0.45
+##                                                   MR10
+## Correlation of (regression) scores with factors   0.75
+## Multiple R square of scores with factors          0.56
+## Minimum correlation of possible factor scores     0.12
+##                                                   MR15
+## Correlation of (regression) scores with factors   0.74
+## Multiple R square of scores with factors          0.55
+## Minimum correlation of possible factor scores     0.11
+##                                                    MR12
+## Correlation of (regression) scores with factors    0.67
+## Multiple R square of scores with factors           0.45
+## Minimum correlation of possible factor scores     -0.09
+##                                                   MR17
+## Correlation of (regression) scores with factors   0.74
+## Multiple R square of scores with factors          0.55
+## Minimum correlation of possible factor scores     0.10
+##                                                    MR18
+## Correlation of (regression) scores with factors    0.62
+## Multiple R square of scores with factors           0.38
+## Minimum correlation of possible factor scores     -0.24
+##                                                    MR16
+## Correlation of (regression) scores with factors    0.56
+## Multiple R square of scores with factors           0.31
+## Minimum correlation of possible factor scores     -0.38
+##                                                   MR19
+## Correlation of (regression) scores with factors   0.73
+## Multiple R square of scores with factors          0.54
+## Minimum correlation of possible factor scores     0.08
+##                                                    MR21
+## Correlation of (regression) scores with factors    0.69
+## Multiple R square of scores with factors           0.48
+## Minimum correlation of possible factor scores     -0.04
+##                                                   MR23
+## Correlation of (regression) scores with factors   0.75
+## Multiple R square of scores with factors          0.56
+## Minimum correlation of possible factor scores     0.12
+##                                                    MR20
+## Correlation of (regression) scores with factors    0.62
+## Multiple R square of scores with factors           0.39
+## Minimum correlation of possible factor scores     -0.23
+##                                                   MR26
+## Correlation of (regression) scores with factors   0.77
+## Multiple R square of scores with factors          0.60
+## Minimum correlation of possible factor scores     0.20
+##                                                   MR27
+## Correlation of (regression) scores with factors   0.89
+## Multiple R square of scores with factors          0.80
+## Minimum correlation of possible factor scores     0.60
+##                                                    MR24
+## Correlation of (regression) scores with factors    0.52
+## Multiple R square of scores with factors           0.27
+## Minimum correlation of possible factor scores     -0.47
+##                                                    MR22
+## Correlation of (regression) scores with factors    0.43
+## Multiple R square of scores with factors           0.19
+## Minimum correlation of possible factor scores     -0.62
+##                                                    MR25
+## Correlation of (regression) scores with factors    0.57
+## Multiple R square of scores with factors           0.32
+## Minimum correlation of possible factor scores     -0.35
+##                                                   MR28
+## Correlation of (regression) scores with factors      0
+## Multiple R square of scores with factors             0
+## Minimum correlation of possible factor scores       -1</code></pre>
+<p>Based on the Kaiser’s rule, we can observe that there are a total of 6 factors that are above the recommended value of 1 of the eigenvalues. This can be observed in the ss loadings section.</p>
+<p>After getting the number of factors that we should use for the analysis, then we adjust the analysis with 6 factors.</p>
+<pre class="r"><code>#Rerun the test with the significant factors found in the previous rule
+fa(cars_for_factor_analysis, nfactors = 6, rotate = &quot;oblimin&quot;)</code></pre>
+<pre><code>## Warning in fa.stats(r = r, f = f, phi = phi, n.obs =
+## n.obs, np.obs = np.obs, : The estimated weights for the
+## factor scores are probably incorrect. Try a different
+## factor score estimation method.</code></pre>
+<pre><code>## Warning in fac(r = r, nfactors = nfactors, n.obs = n.obs,
+## rotate = rotate, : An ultra-Heywood case was detected.
+## Examine the results carefully</code></pre>
+<pre><code>## Factor Analysis using method =  minres
+## Call: fa(r = cars_for_factor_analysis, nfactors = 6, rotate = &quot;oblimin&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##                    MR5   MR1   MR3   MR6   MR2   MR4
+## transmission      0.22  0.51  0.15  0.05 -0.07  0.00
+## color            -0.04 -0.03 -0.01  0.17 -0.01  0.02
+## odometer_value    0.61 -0.14  0.24 -0.04 -0.05 -0.02
+## year_produced    -0.86  0.13  0.03 -0.15  0.07 -0.01
+## engine_fuel       0.01 -0.01  0.94 -0.01  0.00  0.00
+## engine_has_gas   -0.14  0.08  0.05  0.02 -0.02 -0.01
+## engine_type      -0.02  0.03  1.00  0.00  0.00  0.00
+## engine_capacity   0.20 -0.71  0.06  0.02  0.04  0.04
+## body_type         0.03  0.10  0.10  0.11 -0.06  0.03
+## has_warranty      0.03  0.01  0.00  0.02 -0.89  0.02
+## state            -0.01 -0.01 -0.01  0.01  0.83  0.01
+## drivetrain        0.24  0.12  0.07  0.03 -0.05  0.02
+## price_usd        -0.68 -0.29  0.09  0.07  0.19  0.03
+## is_exchangeable  -0.15  0.12 -0.01  0.02 -0.18 -0.08
+## location_region   0.22 -0.01  0.02 -0.02 -0.02  0.00
+## number_of_photos -0.24 -0.13  0.02  0.02  0.06  0.03
+## up_counter       -0.01  0.01  0.00  0.02  0.01  1.00
+## feature_0         0.04  0.02  0.01 -0.98  0.01  0.00
+## feature_1         0.18 -0.02 -0.01  0.63  0.06 -0.04
+## feature_2         0.05  0.59  0.00  0.10  0.03  0.00
+## feature_3         0.41  0.38 -0.02  0.08  0.12  0.01
+## feature_4        -0.03  0.68  0.04  0.12  0.00  0.00
+## feature_5         0.31  0.39  0.09  0.21  0.08  0.00
+## feature_6         0.36  0.45 -0.09 -0.04  0.12  0.01
+## feature_7         0.49  0.33 -0.03  0.03  0.15  0.00
+## feature_8         0.35  0.30 -0.04  0.28  0.09 -0.03
+## feature_9        -0.03  0.30  0.03  0.54 -0.01  0.00
+## duration_listed   0.04 -0.01  0.00 -0.06 -0.03  0.70
+##                     h2      u2 com
+## transmission     0.448  0.5524 1.6
+## color            0.022  0.9781 1.3
+## odometer_value   0.406  0.5944 1.4
+## year_produced    0.794  0.2060 1.1
+## engine_fuel      0.889  0.1108 1.0
+## engine_has_gas   0.019  0.9814 2.0
+## engine_type      1.001 -0.0006 1.0
+## engine_capacity  0.439  0.5607 1.2
+## body_type        0.046  0.9537 3.8
+## has_warranty     0.790  0.2097 1.0
+## state            0.703  0.2970 1.0
+## drivetrain       0.110  0.8902 1.9
+## price_usd        0.731  0.2687 1.6
+## is_exchangeable  0.048  0.9524 3.3
+## location_region  0.048  0.9515 1.1
+## number_of_photos 0.105  0.8947 1.7
+## up_counter       0.997  0.0026 1.0
+## feature_0        0.912  0.0884 1.0
+## feature_1        0.518  0.4822 1.2
+## feature_2        0.431  0.5689 1.1
+## feature_3        0.487  0.5133 2.3
+## feature_4        0.518  0.4818 1.1
+## feature_5        0.498  0.5022 2.7
+## feature_6        0.453  0.5474 2.2
+## feature_7        0.499  0.5006 2.0
+## feature_8        0.522  0.4777 3.1
+## feature_9        0.484  0.5156 1.6
+## duration_listed  0.493  0.5074 1.0
+## 
+##                        MR5  MR1  MR3  MR6  MR2  MR4
+## SS loadings           3.05 2.99 2.03 2.17 1.67 1.50
+## Proportion Var        0.11 0.11 0.07 0.08 0.06 0.05
+## Cumulative Var        0.11 0.22 0.29 0.37 0.43 0.48
+## Proportion Explained  0.23 0.22 0.15 0.16 0.12 0.11
+## Cumulative Proportion 0.23 0.45 0.60 0.76 0.89 1.00
+## 
+##  With factor correlations of 
+##       MR5   MR1   MR3   MR6   MR2   MR4
+## MR5  1.00  0.37  0.01  0.37 -0.18 -0.02
+## MR1  0.37  1.00 -0.06  0.35  0.08 -0.08
+## MR3  0.01 -0.06  1.00  0.00 -0.06  0.01
+## MR6  0.37  0.35  0.00  1.00  0.21 -0.04
+## MR2 -0.18  0.08 -0.06  0.21  1.00 -0.02
+## MR4 -0.02 -0.08  0.01 -0.04 -0.02  1.00
+## 
+## Mean item complexity =  1.6
+## Test of the hypothesis that 6 factors are sufficient.
+## 
+## The degrees of freedom for the null model are  378  and the objective function was  12.23 with Chi Square of  471201
+## The degrees of freedom for the model are 225  and the objective function was  1.12 
+## 
+## The root mean square of the residuals (RMSR) is  0.02 
+## The df corrected root mean square of the residuals is  0.03 
+## 
+## The harmonic number of observations is  38531 with the empirical chi square  16897.61  with prob &lt;  0 
+## The total number of observations was  38531  with Likelihood Chi Square =  43252.92  with prob &lt;  0 
+## 
+## Tucker Lewis Index of factoring reliability =  0.846
+## RMSEA index =  0.07  and the 90 % confidence intervals are  0.07 0.071
+## BIC =  40877.09
+## Fit based upon off diagonal values = 0.99</code></pre>
+<p>From the information above, it is important to observe the pattern matrix of standardized loadings. The matrix shows the correlation between the item or variable and the factor. For the interpretation of the loading, we consider that if the loading is above <em>0.5</em> then it is considered as a valid loading.</p>
+<p>There were six factors that together explain the 48% of variance, with each factor of variance. The factor eigenvalues are:</p>
+<ul>
+<li>Factor one Eigenvalue = 3.05</li>
+<li>Factor two Eigenvalue = 2.99</li>
+<li>Factor three Eigenvalue = 2.03</li>
+<li>Factor four Eigenvalue = 2.17</li>
+<li>Factor five Eigenvalue = 1.67</li>
+<li>Factor six Eigenvalue = 1.50</li>
+</ul>
+<p>The following diagram shows the information of the factor loadings the items and the loadings that every factors have. In addition, the lines shows the correlations between the selected factors.</p>
+<pre class="r"><code>M1 &lt;- fa(cars_for_factor_analysis, nfactors = 6, rotate = &quot;oblimin&quot;)</code></pre>
+<pre><code>## Warning in fa.stats(r = r, f = f, phi = phi, n.obs =
+## n.obs, np.obs = np.obs, : The estimated weights for the
+## factor scores are probably incorrect. Try a different
+## factor score estimation method.</code></pre>
+<pre><code>## Warning in fac(r = r, nfactors = nfactors, n.obs = n.obs,
+## rotate = rotate, : An ultra-Heywood case was detected.
+## Examine the results carefully</code></pre>
+<pre class="r"><code>fa.diagram(M1, main=&quot;cars_for_factor_analysis&quot;)</code></pre>
+<p><img src="index_files/figure-html/factor%20analysis%20diagram-1.png" width="1248" /></p>
+<p><em>The factor analysis was based on the <a href="https://www.youtube.com/watch?v=VCpVcXf_wOk">R Tutorial</a> of Dr. Paul Christiansen, all the credits to him.</em></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

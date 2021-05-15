@@ -1,0 +1,387 @@
+---
+title: "Used cars catalog analysis"
+---
+
+# General information
+
+The following project will show the analysis of a data set found in Kaggle which gather information of sold cars. The information was collected by Kirill Lepchenkov. He collected the information from ads publications about used cars that were published in different sites. The data was scraped from the Belarus county on the 2nd of December 2019. Please visit his contribution on [Kaggle](https://www.kaggle.com/lepchenkov/usedcarscatalog), there you will find more information about the data and also the data set.
+
+# Setting up my environment
+
+```{r loading packages, message=FALSE, warning=FALSE, paged.print=FALSE}
+cars <- read.csv("~/OneDrive/Projects-Data/Cars/cars.csv")
+
+#Packages to create the factor analysis.
+library(GPArotation) #GPArotation implements Gradient Projection Algorithms and several rotation objective functions for factor analysis.
+library(psych) #Functions are primarily for multivariate analysis and scale construction using factor analysis, principal component analysis, cluster analysis and reliability analysis, although others provide basic descriptive statistics. 
+library(REdaS) #Statistic package
+
+#Packages to transform the data
+library(dplyr) #to transform the df (e.g. mutate)
+library(tidyr) #to transform the df(e.g. unite)
+```
+
+# What is factor analysis?
+
+One of the first steps to do on an analysis is to reduce the number of data to have the most valuable data to be analyzed. The general purpose of factor analysis is to get the relationship of the data. In order to do the factor analysis is necessary to make different mathematical procedures for the simplification of the measures or to discover the patterns. The use of Factor Analysis is useful to reduce the variables by observing groups of variables. 
+
+In order to consider something as a factor, it should contain at least three variables and if a factor contains 2 variables, then this should be interpreted with caution. The factors that contain 2 variables should be highly correlated with each another (r >.70) and uncorrelated to other variables.
+
+*Information from: Yong, A. G., & Pearce, S. (2013) A Beginnerâ€™s Guide to Factor Analysis: Focusing on Exploratory Factor Analysis, Tutorials in Quantitative Methods for Psychology, 9(2), 79-94. doi: 10.20982/tqmp.09.2.p079*
+
+The transformation of the data is important for the factor analysis, since the factor analysis only works with integers or floats and not with strings. The fact that the current data set contains strings makes impossible to use the data for the factor analysis. Therefore, the transformation is necessary.
+
+## A glance to the data
+
+The data set “used-cars-catalog” is composed by 30 columns and more than 30K rows. 
+
+```{r Short data glance}
+glimpse(cars)
+```
+
+In order to have only one name of the cars, the columns "manufacturer_name" and "model_name" were combined into cars to have a better an unique representation of the cars.
+
+```{r unite or concatenate two column}
+cars <- cars %>% 
+  unite(car, c("manufacturer_name", "model_name"))
+```
+
+
+## Transformation of the data
+
+To transform the data, it was necessary to observe the data and then provide a numerical representation of the data. The new values are not representative of their actual value or preference, rather is their correlation with the other variables what is more relevant after this transformation.
+
+### Transmission
+
+|Group | Variable | Changed by |
+|:----------- | :---------: | ---: |
+|transmission | automatic | 1 |
+|transmission | mechanical | 2 |
+|transmission | NA | 0 |
+
+### Color
+
+|Group | Variable | Changed by |
+|:----------- | :---------: | ---: |
+|color | silver | 1 |
+|color | blue | 2 |
+|color | red | 3 |
+|color | black | 4 |
+|color | grey | 5 |
+|color | other | 6 |
+|color | brown | 7 |
+|color | white | 8 |
+|color | green | 9 |
+|color | violet | 10 |
+|color | orange | 11 |
+|color | yellow | 12 |
+|color | NA | 0 |
+
+### Engine fuel
+
+|Group | Variable | Changed by |
+|:----------- | :---------: | ---: |
+|engine fuel | gasoline | 1 |
+|engine fuel | gas | 2 |
+|engine fuel | diesel | 3 |
+|engine fuel | hybrid-petrol | 4 |
+|engine fuel | hybrid-diesel | 5 |
+|engine fuel | hybrid | 6 |
+|engine fuel | NA | 0 |
+
+### Engine type
+
+|Group | Variable | Changed by |
+|:----------- | :---------: | ---: |
+|engine type | gasoline | 1 |
+|engine type | diesel | 2 |
+|engine type | electric | 3 |
+|engine type | NA | 0 |
+
+### Body type
+
+|Group | Variable | Changed by |
+|:----------- | :---------: | ---: |
+|body type | universal | 1 |
+|body type | suv | 2 |
+|body type | sedan | 3 |
+|body type | hatchback | 4 |
+|body type | liftback | 5 |
+|body type | minivan | 6 |
+|body type | minibus | 7 |
+|body type | van | 8 |
+|body type | pickup | 9 |
+|body type | coupe | 10 |
+|body type | cabriolet | 11 |
+|body type | limousine | 12 |
+|body type | NA | 0 |
+
+### State
+
+|Group | Variable | Changed by |
+|:----------- | :---------: | ---: |
+|state | owned | 1 |
+|state | emergency | 2 |
+|state | new | 3 |
+|state | NA | 4 |
+
+### Drivetrain
+
+|Group | Variable | Changed by |
+|:----------- | :---------: | ---: |
+|drivetrain | all | 1 |
+|drivetrain | front | 2 |
+|drivetrain | rear | 3 |
+|drivetrain | NA | 4 |
+
+### Location region
+
+|Group | Variable | Changed by |
+|:----------- | :---------: | ---: |
+|location region | Минская обл. | 1 |
+|location region | Гомельская обл. | 2 |
+|location region | Брестская обл. | 3 |
+|location region | Могилевская обл. | 4 |
+|location region | Витебская обл. | 5 |
+|location region | Гродненская обл. | 6 |
+|location region | NA | 0 |
+
+### Engine capacity
+
+For the variable engine capacity, there were ten rows that did not have any information about the variable, and these were transformed from **_NA_** to *0*.
+
+### Other values
+There were other variables that had Boolean values, these were transformed as **_True_** *(1)* and **_False_** *(2)*. In this case the same value was given to the NA values, this means **_NA_** = *0*. 
+
+## How was the data transformed?
+
+In order to transform the data the function mutate was used. Example:
+
+
+```{r transformation example, eval=FALSE, include=FALSE}
+cars <- cars %>%
+  mutate(transmission = case_when(
+    transmission == "automatic" ~ 1,
+    transmission == "mechanical" ~ 2,
+    transmission == NA ~ 0
+  ))
+```
+
+In addition, the different values were gotten with the function unique.
+
+```{r unique function as example}
+unique(cars$transmission)
+```
+
+
+```{r Transforming the data from strings to integers, include=FALSE}
+unique(cars$transmission)
+cars <- cars %>%
+  mutate(transmission = case_when(
+    transmission == "automatic" ~ 1,
+    transmission == "mechanical" ~ 2,
+    transmission == NA ~ 0
+  ))
+
+unique(cars$color)
+cars <- cars %>%
+  mutate(color = case_when(
+    color == "silver" ~ 1,
+    color == "blue" ~ 2,
+    color == "red" ~ 3,
+    color == "black" ~ 4,
+    color == "grey" ~ 5,
+    color == "other" ~ 6,
+    color == "brown" ~ 7,
+    color == "white" ~ 8,
+    color == "green" ~ 9,
+    color == "violet" ~ 10,
+    color == "orange" ~ 11,
+    color == "yellow" ~ 12,
+    color == NA ~ 0
+  ))
+
+
+unique(cars$engine_fuel)
+cars <- cars %>%
+  mutate(engine_fuel = case_when(
+    engine_fuel == "gasoline" ~ 1,
+    engine_fuel == "gas" ~ 2,
+    engine_fuel == "diesel" ~ 3,
+    engine_fuel == "hybrid-petrol" ~ 4,
+    engine_fuel == "hybrid-diesel" ~ 5,
+    engine_fuel == "electric" ~ 6,
+    engine_fuel == NA ~ 0
+  ))
+
+unique(cars$engine_type)
+cars <- cars %>%
+  mutate(engine_type = case_when(
+    engine_type == "gasoline" ~ 1,
+    engine_type == "diesel" ~ 2,
+    engine_type == "electric" ~ 3,
+    engine_type == NA ~ 0
+  ))
+
+
+unique(cars$body_type)
+cars <- cars %>%
+  mutate(body_type = case_when(
+    body_type == "universal" ~ 1,
+    body_type == "suv" ~ 2,
+    body_type == "sedan" ~ 3,
+    body_type == "hatchback" ~ 4,
+    body_type == "liftback" ~ 5,
+    body_type == "minivan" ~ 6,
+    body_type == "minibus" ~ 7,
+    body_type == "van" ~ 8,
+    body_type == "pickup" ~ 9,
+    body_type == "coupe" ~ 10,
+    body_type == "cabriolet" ~ 11,
+    body_type == "limousine" ~ 12,
+    body_type == NA ~ 0
+  ))
+
+
+unique(cars$state)
+cars <- cars %>%
+  mutate(state = case_when(
+    state == "owned" ~ 1,
+    state == "emergency" ~ 2,
+    state == "new" ~ 3,
+    state == NA ~ 0
+  ))
+
+
+unique(cars$drivetrain)
+cars <- cars %>%
+  mutate(drivetrain = case_when(
+    drivetrain == "all" ~ 1,
+    drivetrain == "front" ~ 2,
+    drivetrain == "rear" ~ 3,
+    drivetrain == NA ~ 0
+  ))
+
+unique(cars$location_region)
+cars <- cars %>%
+  mutate(location_region = case_when(
+    location_region == "Минская обл." ~ 1,
+    location_region == "Гомельская обл." ~ 2,
+    location_region == "Брестская обл." ~ 3,
+    location_region == "Могилевская обл." ~ 4,
+    location_region == "Витебская обл." ~ 5,
+    location_region == "Гродненская обл." ~ 6,
+    location_region == NA ~ 0
+  ))
+
+
+colSums(is.na(cars)) #engine_capacity 10 NAs values
+cars[is.na(cars)] <- 0
+colSums(is.na(cars)) #Zero NAs
+
+
+cars <- cars %>%
+  mutate(engine_has_gas = case_when
+    (engine_has_gas == "True" ~ 1,
+    engine_has_gas == "False" ~ 2),
+    has_warranty = case_when
+    (has_warranty == "True" ~ 1,
+    has_warranty == "False" ~ 2),
+    is_exchangeable = case_when
+    (is_exchangeable == "True" ~ 1,
+    is_exchangeable == "False" ~ 2),
+    feature_0 = case_when
+    (feature_0 == "True" ~ 1,
+      feature_0 == "False" ~ 2),
+    feature_1 = case_when
+    (feature_1 == "True" ~ 1,
+      feature_1 == "False" ~ 2),
+    feature_2 = case_when
+    (feature_2 == "True" ~ 1,
+      feature_2 == "False" ~ 2),
+    feature_3 = case_when
+    (feature_3 == "True" ~ 1,
+      feature_3 == "False" ~ 2),
+    feature_4 = case_when
+    (feature_4 == "True" ~ 1,
+      feature_4 == "False" ~ 2),
+    feature_5 = case_when
+    (feature_5 == "True" ~ 1,
+      feature_5 == "False" ~ 2),
+    feature_6 = case_when
+    (feature_6 == "True" ~ 1,
+      feature_6 == "False" ~ 2),
+    feature_7 = case_when
+    (feature_7 == "True" ~ 1,
+      feature_7 == "False" ~ 2),
+    feature_8 = case_when
+    (feature_8 == "True" ~ 1,
+      feature_8 == "False" ~ 2),
+    feature_9 = case_when
+    (feature_9 == "True" ~ 1,
+      feature_9 == "False" ~ 2)
+  )
+```
+
+# Factor analysis
+
+For the factor analysis one extra change was done. As it was explained before, it is necessary to only use the values in the analysis and do not consider some strings or characters. Therefore, for the analysis the new column car was removed to have only a subset with values.
+
+```{r subset of cars for factor analysis}
+cars_for_factor_analysis <- subset(cars, select = -car)
+```
+
+## Is the factor analysis significant?
+
+## Bartletts test of spherecity
+The first step of the factor analysis is to understand if the analysis makes sense. This can be seen with the p-value. In general we want to have the Bartletts test of spherecity to be significant. In this case the p-value is highly significant.
+```{r Bartletts test of spherecity}
+bart_spher(cars_for_factor_analysis)
+```
+
+## KMO
+
+For the measure Kaiser-Meyer-Olkin we want to have a value over .7 in the overall MSA.
+```{r KMO}
+KMO(cars_for_factor_analysis)
+```
+
+As it could be observed in the two previous test the values are acceptable and the factor analysis can be performed. The sampling adequacy was acceptable and the Bartlett's test of sphericity demonstrate that correlations between items were enough for FA($X^{2}$(378) = 471200.97, p< .001).
+
+## Kaiser's rule
+
+The first step is to observe how many factors there are that we can use for our future analysis. The following analysis is based on the Kaiser's rule. For this we are going to do the factor analysis in our new subset with all the transformed values and then we are going to consider all the variables or all the factors of the subset. In addition, the rotation method that is going to be implemented in this analysis will be the default rotation method called *oblimin*. For this analysis the selection of the oblimin method is based on the assumption that there is going to be a correlation between factors. For instance, there could be a strong correlation between engine type and engine fuel.
+
+```{r factor analysis 1}
+fa(cars_for_factor_analysis, nfactors = 28, rotate = "oblimin") #6 values greather than 1 based on Karses rule
+```
+
+Based on the Kaiser's rule, we can observe that there are a total of 6 factors that are above the recommended value of 1 of the eigenvalues. This can be observed in the ss loadings section. 
+
+After getting the number of factors that we should use for the analysis, then we adjust the analysis with 6 factors.
+
+```{r factor analysis 2}
+#Rerun the test with the significant factors found in the previous rule
+fa(cars_for_factor_analysis, nfactors = 6, rotate = "oblimin")
+```
+
+From the information above, it is important to observe the pattern matrix of standardized loadings. The matrix shows the correlation between the item or variable and the factor. For the interpretation of the loading, we consider that if the loading is above *0.5* then it is considered as a valid loading.
+
+There were six factors that together explain the 48% of variance, with each factor of variance. The factor eigenvalues are:
+
+- Factor one Eigenvalue = 3.05 
+- Factor two Eigenvalue = 2.99 
+- Factor three Eigenvalue = 2.03 
+- Factor four Eigenvalue = 2.17 
+- Factor five Eigenvalue = 1.67 
+- Factor six Eigenvalue = 1.50
+
+The following diagram shows the information of the factor loadings the items and the loadings that every factors have. In addition, the lines shows the correlations between the selected factors.
+
+```{r factor analysis diagram, fig.width=13, fig.height=14}
+M1 <- fa(cars_for_factor_analysis, nfactors = 6, rotate = "oblimin")
+fa.diagram(M1, main="cars_for_factor_analysis")
+```
+
+
+*The factor analysis was based on the [R Tutorial](https://www.youtube.com/watch?v=VCpVcXf_wOk) of Dr. Paul Christiansen, all the credits to him.*
