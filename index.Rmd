@@ -1,5 +1,7 @@
 ---
+author: "Omega Smith and Ricardo David Barragan Martinez"
 title: "Used cars catalog analysis"
+date: "5/14/2021"
 ---
 
 # General information
@@ -19,6 +21,11 @@ library(REdaS) #Statistic package
 #Packages to transform the data
 library(dplyr) #to transform the df (e.g. mutate)
 library(tidyr) #to transform the df(e.g. unite)
+
+#install.packages("corrplot")
+ #Correlogram is a graph of correlation matrix.
+library(corrplot)
+library(RColorBrewer)
 ```
 
 # What is factor analysis?
@@ -385,3 +392,59 @@ fa.diagram(M1, main="cars_for_factor_analysis")
 
 
 *The factor analysis was based on the [R Tutorial](https://www.youtube.com/watch?v=VCpVcXf_wOk) of Dr. Paul Christiansen, all the credits to him.*
+
+## Correlation Matrix
+
+```{r Matrix Correlation,fig.width=13, fig.height=14}
+Matrix_Corrlation <-cor(cars_for_factor_analysis)
+corrplot(Matrix_Corrlation, type="upper", order="hclust",
+         col=brewer.pal(n=8, name="RdYlBu"))
+         
+```
+
+
+# Subset without features
+
+```{r subset without features}
+cars_for_factor_analysis_w_features <- subset(cars, select = c(-car, 
+                                   -feature_0,-feature_1,
+                                   -feature_2, -feature_3,
+                                   -feature_4, -feature_5,
+                                   -feature_6, -feature_7, 
+                                   -feature_8, -feature_9))
+```
+
+## Bartletts
+
+```{r Bartletts test of spherecity without features}
+bart_spher(cars_for_factor_analysis_w_features)
+```
+
+## KMO
+```{r KMO without features}
+KMO(cars_for_factor_analysis_w_features)
+```
+
+## Factor analysis
+```{r factor analysis 1 without features}
+fa(cars_for_factor_analysis_w_features, nfactors = 18, rotate = "oblimin") 
+```
+
+## Factor analysis
+```{r factor analysis 2 without features}
+fa(cars_for_factor_analysis_w_features, nfactors = 5, rotate = "oblimin") 
+```
+
+## Factor analysis diagram
+```{r factor analysis diagram without features, fig.width=13, fig.height=14}
+M2 <- fa(cars_for_factor_analysis_w_features, nfactors = 5, rotate = "oblimin")
+fa.diagram(M2, main="cars_for_factor_analysis")
+```
+
+## Correlation Matrix
+
+```{r Matrix Correlation without features,fig.width=13, fig.height=14}
+Matrix_Corrlation_w_features <-cor(cars_for_factor_analysis_w_features)
+corrplot(Matrix_Corrlation_w_features, type="upper", order="hclust",
+         col=brewer.pal(n=8, name="RdYlBu"))
+```
