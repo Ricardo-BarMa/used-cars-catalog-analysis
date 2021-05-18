@@ -1,7 +1,6 @@
 ---
 author: "Omega Smith and Ricardo David Barragan Martinez"
 title: "Used cars catalog analysis"
-date: "5/14/2021"
 ---
 
 # General information
