@@ -166,7 +166,6 @@ pre code {
 
 <h1 class="title toc-ignore">Used cars catalog analysis</h1>
 <h4 class="author">Omega Smith and Ricardo David Barragan Martinez</h4>
-<h4 class="date">5/14/2021</h4>
 
 </div>
 
@@ -657,8 +656,7 @@ library(RColorBrewer)</code></pre>
 <h2>Bartletts test of spherecity</h2>
 <p>The first step of the factor analysis is to understand if the analysis makes sense. This can be seen with the p-value. In general we want to have the Bartletts test of spherecity to be significant. In this case the p-value is highly significant.</p>
 <pre class="r"><code>bart_spher(cars_for_factor_analysis)</code></pre>
-<pre><code>## 
-##  Bartlett&#39;s Test of Sphericity
+<pre><code>##  Bartlett&#39;s Test of Sphericity
 ## 
 ## Call: bart_spher(x = cars_for_factor_analysis)
 ## 
@@ -1048,8 +1046,7 @@ corrplot(Matrix_Corrlation, type=&quot;upper&quot;, order=&quot;hclust&quot;,
 <div id="bartletts" class="section level2">
 <h2>Bartletts</h2>
 <pre class="r"><code>bart_spher(cars_for_factor_analysis_w_features)</code></pre>
-<pre><code>## 
-##  Bartlett&#39;s Test of Sphericity
+<pre><code>##  Bartlett&#39;s Test of Sphericity
 ## 
 ## Call: bart_spher(x = cars_for_factor_analysis_w_features)
 ## 
