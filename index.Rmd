@@ -561,7 +561,7 @@ ggplot(cars3, aes(PC1,PC2, col=year_produced, fill = year_produced)) +
 ```
 
 ```{r correlation with PCs without features}
-cor(cars_for_factor_analysis_w_features,cars3[,31:32])
+cor(cars_for_factor_analysis_w_features,cars3[,31:32]) 
 ```
 
 
