@@ -61,7 +61,6 @@ cars <- cars %>%
   unite(car, c("manufacturer_name", "model_name"))
 ```
 
-
 ## Transformation of the data
 
 To transform the data, it was necessary to observe the data and then provide a numerical representation of the data. The new values are not representative of their actual value or preference, rather is their correlation with the other variables what is more relevant after this transformation.
