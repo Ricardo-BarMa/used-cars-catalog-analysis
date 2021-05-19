@@ -177,8 +177,6 @@ pre code {
 <div id="setting-up-my-environment" class="section level1">
 <h1>Setting up my environment</h1>
 <pre class="r"><code>cars &lt;- read.csv(&quot;~/OneDrive/Projects-Data/Cars/cars.csv&quot;)
-cars_PCA &lt;- read.csv(&quot;~/OneDrive/Projects-Data/Cars/cars.csv&quot;)
-
 
 #Packages to create the factor analysis.
 library(GPArotation) #GPArotation implements Gradient Projection Algorithms and several rotation objective functions for factor analysis.
@@ -1591,57 +1589,11 @@ myPr</code></pre>
 ## Cumulative Proportion  0.95216 0.9650 0.97527 0.9838 0.99193 0.99896 1.00000</code></pre>
 <pre class="r"><code>plot(myPr, type = &quot;l&quot;)</code></pre>
 <p><img src="index_files/figure-html/plot%20PC-1.png" width="672" /></p>
-<pre class="r"><code>biplot(myPr,scale = 0)</code></pre>
-<p><img src="index_files/figure-html/biplot-1.png" width="1248" /></p>
 <p>Transformation of the data to plot the first two PCs</p>
-<pre class="r"><code>cars2 &lt;- cbind(cars_PCA, myPr$x[,1:2])</code></pre>
-<pre class="r"><code>ggplot(cars2, aes(PC1,PC2, col=manufacturer_name, fill = manufacturer_name)) +
-  stat_ellipse(geom = &quot;polygon&quot;, col =&quot;black&quot;, alpha = 0.5) +
+<pre class="r"><code>cars2 &lt;- cbind(cars, myPr$x[,1:2])</code></pre>
+<pre class="rggplot"><code>ggplot(cars2, aes(PC1,PC2, col=car, fill = car)) +
+  stat_ellipse(goem = &quot;polygon&quot;, col =&quot;black&quot;, alpha = 0.5) +
   geom_point(shape=21,col=&quot;black&quot;)</code></pre>
-<p><img src="index_files/figure-html/ggplot%20of%20PCAs-1.png" width="1248" /></p>
-<pre class="r"><code>ggplot(cars2, aes(PC1,PC2, col=transmission, fill = transmission)) +
-  stat_ellipse(geom = &quot;polygon&quot;, col =&quot;black&quot;, alpha = 0.5) +
-  geom_point(shape=21,col=&quot;black&quot;)</code></pre>
-<p><img src="index_files/figure-html/ggplot%20of%20PCAs%20transmission-1.png" width="1248" /></p>
-<pre class="r"><code>ggplot(cars2, aes(PC1,PC2, col=engine_fuel, fill = engine_fuel)) +
-  stat_ellipse(geom = &quot;polygon&quot;, col =&quot;black&quot;, alpha = 0.5) +
-  geom_point(shape=21,col=&quot;black&quot;)</code></pre>
-<pre><code>## Too few points to calculate an ellipse</code></pre>
-<p><img src="index_files/figure-html/ggplot%20of%20PCAs%20engine%20fuel-1.png" width="1248" /></p>
-<pre class="r"><code>ggplot(cars2, aes(PC1,PC2, col=year_produced, fill = year_produced)) +
-  stat_ellipse(geom = &quot;polygon&quot;, col =&quot;black&quot;, alpha = 0.5) +
-  geom_point(shape=21,col=&quot;black&quot;)</code></pre>
-<p><img src="index_files/figure-html/ggplot%20of%20PCAs%20year%20produced-1.png" width="1248" /></p>
-<pre class="r"><code>cor(cars_for_factor_analysis,cars2[,31:32])</code></pre>
-<pre><code>##                            PC1          PC2
-## transmission     -0.6480961754  0.134386727
-## color            -0.0601978769 -0.077030132
-## odometer_value   -0.3642257785  0.546486051
-## year_produced     0.6608026614 -0.370990442
-## engine_fuel       0.0228631537  0.475937693
-## engine_has_gas    0.0405525246 -0.060309949
-## engine_type       0.0127056990  0.465265734
-## engine_capacity   0.4219597062  0.241146252
-## body_type        -0.1931305285  0.103061423
-## has_warranty     -0.0113096202  0.715528002
-## state            -0.0227282117 -0.701955129
-## drivetrain       -0.3335034459  0.208112481
-## price_usd         0.7127004648 -0.356228491
-## is_exchangeable  -0.0004119467  0.058268610
-## location_region  -0.1734655410  0.189948153
-## number_of_photos  0.3183749504 -0.168517869
-## up_counter        0.0878014788  0.088982431
-## feature_0         0.5984328464  0.270554829
-## feature_1        -0.5807522116 -0.184689303
-## feature_2        -0.6094409685 -0.169757479
-## feature_3        -0.7134905770 -0.045671647
-## feature_4        -0.6276383059 -0.171930931
-## feature_5        -0.7272899879 -0.024111405
-## feature_6        -0.6561653151 -0.079052770
-## feature_7        -0.7082766068 -0.009071868
-## feature_8        -0.7431099717 -0.104802287
-## feature_9        -0.6141914991 -0.233419849
-## duration_listed   0.0916034646  0.158288572</code></pre>
 </div>
 <div id="pca-results-without-features" class="section level2">
 <h2>PCA results without features</h2>
@@ -1803,46 +1755,12 @@ myPr</code></pre>
 
 ## Warning in arrows(0, 0, y[, 1L] * 0.8, y[, 2L] * 0.8, col = col[2L], length =
 ## arrow.len): zero-length arrow is of indeterminate angle and so skipped</code></pre>
-<p><img src="index_files/figure-html/biplot%20without%20features-1.png" width="1248" /></p>
+<p><img src="index_files/figure-html/biplot-1.png" width="1248" /></p>
 <p>Transformation of the data to plot the first two PCs</p>
-<pre class="r"><code>cars3 &lt;- cbind(cars_PCA, myPr2$x[,1:2])</code></pre>
-<pre class="r"><code>ggplot(cars3, aes(PC1,PC2, col=manufacturer_name, fill = manufacturer_name)) +
-  stat_ellipse(geom = &quot;polygon&quot;, col =&quot;black&quot;, alpha = 0.4) +
+<pre class="r"><code>cars3 &lt;- cbind(cars, myPr2$x[,1:2])</code></pre>
+<pre class="rggplot"><code>ggplot(cars3, aes(PC1,PC2, col=car, fill = car)) +
+  stat_ellipse(goem = &quot;polygon&quot;, col =&quot;black&quot;, alpha = 0.5) +
   geom_point(shape=21,col=&quot;black&quot;)</code></pre>
-<p><img src="index_files/figure-html/ggplot%20of%20PCAs%20without%20features%20-1.png" width="1248" /></p>
-<pre class="r"><code>ggplot(cars3, aes(PC1,PC2, col=transmission, fill = transmission)) +
-  stat_ellipse(geom = &quot;polygon&quot;, col =&quot;black&quot;, alpha = 0.5) +
-  geom_point(shape=21,col=&quot;black&quot;)</code></pre>
-<p><img src="index_files/figure-html/ggplot%20of%20PCAs%20transmission%20without%20features-1.png" width="1248" /></p>
-<pre class="r"><code>ggplot(cars3, aes(PC1,PC2, col=engine_fuel, fill = engine_fuel)) +
-  stat_ellipse(geom = &quot;polygon&quot;, col =&quot;black&quot;, alpha = 0.5) +
-  geom_point(shape=21,col=&quot;black&quot;)</code></pre>
-<pre><code>## Too few points to calculate an ellipse</code></pre>
-<p><img src="index_files/figure-html/ggplot%20of%20PCAs%20engine%20fuel%20without%20features-1.png" width="1248" /></p>
-<pre class="r"><code>ggplot(cars3, aes(PC1,PC2, col=year_produced, fill = year_produced)) +
-  stat_ellipse(geom = &quot;polygon&quot;, col =&quot;black&quot;, alpha = 0.5) +
-  geom_point(shape=21,col=&quot;black&quot;)</code></pre>
-<p><img src="index_files/figure-html/ggplot%20of%20PCAs%20year%20produced%20without%20features-1.png" width="1248" /></p>
-<pre class="r"><code>cor(cars_for_factor_analysis_w_features,cars3[,31:32])</code></pre>
-<pre><code>##                            PC1          PC2
-## transmission      0.2303647193 -0.418268779
-## color            -0.0131244925  0.037980488
-## odometer_value    0.9999996355  0.000853772
-## year_produced    -0.4891491118  0.550514899
-## engine_fuel       0.2422986228  0.209725548
-## engine_has_gas   -0.0578220628  0.042056178
-## engine_type       0.2444996099  0.209412635
-## engine_capacity   0.1062528728  0.374542505
-## body_type         0.0775422871 -0.015459857
-## has_warranty      0.1896918910 -0.226653667
-## state            -0.1732012556  0.194248134
-## drivetrain        0.1967493577 -0.248203288
-## price_usd        -0.4219785079  0.906605834
-## is_exchangeable  -0.0423260322 -0.019146903
-## location_region   0.1204937722 -0.147828849
-## number_of_photos -0.1439495608  0.282498617
-## up_counter       -0.0210063324  0.053528365
-## duration_listed  -0.0004591462  0.036779113</code></pre>
 </div>
 </div>
 

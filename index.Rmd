@@ -11,6 +11,8 @@ The following project will show the analysis of a data set found in Kaggle which
 
 ```{r loading packages, message=FALSE, warning=FALSE, paged.print=FALSE}
 cars <- read.csv("~/OneDrive/Projects-Data/Cars/cars.csv")
+cars_PCA <- read.csv("~/OneDrive/Projects-Data/Cars/cars.csv")
+
 
 #Packages to create the factor analysis.
 library(GPArotation) #GPArotation implements Gradient Projection Algorithms and several rotation objective functions for factor analysis.
@@ -25,6 +27,8 @@ library(tidyr) #to transform the df(e.g. unite)
  #Correlogram is a graph of correlation matrix.
 library(corrplot)
 library(RColorBrewer)
+
+library(ggplot2) #to create graphs
 ```
 
 # What is factor analysis?
@@ -44,6 +48,11 @@ The data set “used-cars-catalog” is composed by 30 columns and more than 30K
 ```{r Short data glance}
 glimpse(cars)
 ```
+
+```{r summary}
+summary(cars)
+```
+
 
 In order to have only one name of the cars, the columns "manufacturer_name" and "model_name" were combined into cars to have a better an unique representation of the cars.
 
@@ -447,3 +456,113 @@ Matrix_Corrlation_w_features <-cor(cars_for_factor_analysis_w_features)
 corrplot(Matrix_Corrlation_w_features, type="upper", order="hclust",
          col=brewer.pal(n=8, name="RdYlBu"))
 ```
+
+# PCA
+
+## PCA results
+```{r PCA2}
+myPr <- prcomp(cars_for_factor_analysis,scale = TRUE)
+myPr
+```
+
+```{r summary PCA}
+summary(myPr)
+```
+
+```{r plot PC}
+plot(myPr, type = "l")
+```
+
+```{r biplot,fig.width=13, fig.height=14}
+biplot(myPr,scale = 0)
+```
+
+
+Transformation of the data to plot the first two PCs
+
+```{r binding PCAs}
+cars2 <- cbind(cars_PCA, myPr$x[,1:2])
+```
+
+
+```{r ggplot of PCAs,fig.width=13, fig.height=14}
+ggplot(cars2, aes(PC1,PC2, col=manufacturer_name, fill = manufacturer_name)) +
+  stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
+  geom_point(shape=21,col="black")
+```
+
+```{r ggplot of PCAs transmission,fig.width=13, fig.height=14}
+ggplot(cars2, aes(PC1,PC2, col=transmission, fill = transmission)) +
+  stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
+  geom_point(shape=21,col="black")
+```
+
+```{r ggplot of PCAs engine fuel,fig.width=13, fig.height=14}
+ggplot(cars2, aes(PC1,PC2, col=engine_fuel, fill = engine_fuel)) +
+  stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
+  geom_point(shape=21,col="black")
+```
+
+```{r ggplot of PCAs year produced,fig.width=13, fig.height=14}
+ggplot(cars2, aes(PC1,PC2, col=year_produced, fill = year_produced)) +
+  stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
+  geom_point(shape=21,col="black")
+```
+
+```{r correlation with PCs}
+cor(cars_for_factor_analysis,cars2[,31:32])
+```
+
+## PCA results without features
+```{r PCA without features}
+myPr2 <- prcomp(cars_for_factor_analysis_w_features,sacale=TRUE)
+myPr2
+```
+
+```{r Summary PCA without features}
+summary(myPr2)
+```
+
+```{r plot PCA without features}
+plot(myPr2, type = "l")
+```
+
+```{r biplot without features,fig.width=13, fig.height=14}
+biplot(myPr2,scale = 0)
+```
+
+Transformation of the data to plot the first two PCs
+```{r binding PCAs without features}
+cars3 <- cbind(cars_PCA, myPr2$x[,1:2])
+```
+
+```{r ggplot of PCAs without features ,fig.width=13, fig.height=14}
+ggplot(cars3, aes(PC1,PC2, col=manufacturer_name, fill = manufacturer_name)) +
+  stat_ellipse(geom = "polygon", col ="black", alpha = 0.4) +
+  geom_point(shape=21,col="black")
+```
+
+```{r ggplot of PCAs transmission without features,fig.width=13, fig.height=14}
+ggplot(cars3, aes(PC1,PC2, col=transmission, fill = transmission)) +
+  stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
+  geom_point(shape=21,col="black")
+```
+
+```{r ggplot of PCAs engine fuel without features,fig.width=13, fig.height=14}
+ggplot(cars3, aes(PC1,PC2, col=engine_fuel, fill = engine_fuel)) +
+  stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
+  geom_point(shape=21,col="black")
+```
+
+```{r ggplot of PCAs year produced without features,fig.width=13, fig.height=14}
+ggplot(cars3, aes(PC1,PC2, col=year_produced, fill = year_produced)) +
+  stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
+  geom_point(shape=21,col="black")
+```
+
+```{r correlation with PCs without features}
+cor(cars_for_factor_analysis_w_features,cars3[,31:32])
+```
+
+
+
