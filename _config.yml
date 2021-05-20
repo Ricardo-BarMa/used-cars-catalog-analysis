@@ -1,4 +1,4 @@
-theme: jekyll-theme-dinky
+theme: jekyll-theme-cayman
 output: 
   html_document:
   toc: true
