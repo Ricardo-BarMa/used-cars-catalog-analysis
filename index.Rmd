@@ -464,13 +464,18 @@ myPr <- prcomp(cars_for_factor_analysis,scale = TRUE)
 myPr
 ```
 
+## Summary of the PCA
+
 ```{r summary PCA}
 summary(myPr)
 ```
 
+#Plot showing the proportion of the variances
+
 ```{r plot PC}
 plot(myPr, type = "l")
 ```
+## Biplot of the principal components 
 
 ```{r biplot,fig.width=13, fig.height=14}
 biplot(myPr,scale = 0)
@@ -483,6 +488,7 @@ Transformation of the data to plot the first two PCs
 cars2 <- cbind(cars_PCA, myPr$x[,1:2])
 ```
 
+## PCA plot of PC1 and PC2 and the manufacturer names
 
 ```{r ggplot of PCAs,fig.width=13, fig.height=14}
 ggplot(cars2, aes(PC1,PC2, col=manufacturer_name, fill = manufacturer_name)) +
@@ -490,11 +496,15 @@ ggplot(cars2, aes(PC1,PC2, col=manufacturer_name, fill = manufacturer_name)) +
   geom_point(shape=21,col="black")
 ```
 
+## PCA plot of PC1 and PC2 and the transmission options
+
 ```{r ggplot of PCAs transmission,fig.width=13, fig.height=14}
 ggplot(cars2, aes(PC1,PC2, col=transmission, fill = transmission)) +
   stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
   geom_point(shape=21,col="black")
 ```
+
+## PCA plot of PC1 and PC2 and the engine fuels
 
 ```{r ggplot of PCAs engine fuel,fig.width=13, fig.height=14}
 ggplot(cars2, aes(PC1,PC2, col=engine_fuel, fill = engine_fuel)) +
@@ -502,38 +512,52 @@ ggplot(cars2, aes(PC1,PC2, col=engine_fuel, fill = engine_fuel)) +
   geom_point(shape=21,col="black")
 ```
 
+## PCA plot of PC1 and PC2 and the year produced
+
 ```{r ggplot of PCAs year produced,fig.width=13, fig.height=14}
 ggplot(cars2, aes(PC1,PC2, col=year_produced, fill = year_produced)) +
   stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
   geom_point(shape=21,col="black")
 ```
 
+## Correlation between PC1 and PC2 and variables
+
 ```{r correlation with PCs}
 cor(cars_for_factor_analysis,cars2[,31:32])
 ```
 
 ## PCA results without features
+
 ```{r PCA without features}
 myPr2 <- prcomp(cars_for_factor_analysis_w_features,sacale=TRUE)
 myPr2
 ```
 
+## Summary of the PCA
+
 ```{r Summary PCA without features}
 summary(myPr2)
 ```
 
+#Plot showing the proportion of the variances
+
 ```{r plot PCA without features}
 plot(myPr2, type = "l")
 ```
+
+## Biplot of the principal components without features
 
 ```{r biplot without features,fig.width=13, fig.height=14}
 biplot(myPr2,scale = 0)
 ```
 
 Transformation of the data to plot the first two PCs
+
 ```{r binding PCAs without features}
 cars3 <- cbind(cars_PCA, myPr2$x[,1:2])
 ```
+
+## PCA plot of PC1 and PC2 and the manufacturer names options without features
 
 ```{r ggplot of PCAs without features ,fig.width=13, fig.height=14}
 ggplot(cars3, aes(PC1,PC2, col=manufacturer_name, fill = manufacturer_name)) +
@@ -541,11 +565,15 @@ ggplot(cars3, aes(PC1,PC2, col=manufacturer_name, fill = manufacturer_name)) +
   geom_point(shape=21,col="black")
 ```
 
+## PCA plot of PC1 and PC2 and the transmission options without features
+
 ```{r ggplot of PCAs transmission without features,fig.width=13, fig.height=14}
 ggplot(cars3, aes(PC1,PC2, col=transmission, fill = transmission)) +
   stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
   geom_point(shape=21,col="black")
 ```
+
+## PCA plot of PC1 and PC2 and the engine fuels without features
 
 ```{r ggplot of PCAs engine fuel without features,fig.width=13, fig.height=14}
 ggplot(cars3, aes(PC1,PC2, col=engine_fuel, fill = engine_fuel)) +
@@ -553,12 +581,15 @@ ggplot(cars3, aes(PC1,PC2, col=engine_fuel, fill = engine_fuel)) +
   geom_point(shape=21,col="black")
 ```
 
+## PCA plot of PC1 and PC2 and the year produced without features
+
 ```{r ggplot of PCAs year produced without features,fig.width=13, fig.height=14}
 ggplot(cars3, aes(PC1,PC2, col=year_produced, fill = year_produced)) +
   stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
   geom_point(shape=21,col="black")
 ```
 
+## Correlation between PC1 and PC2 and variables without features
 ```{r correlation with PCs without features}
 cor(cars_for_factor_analysis_w_features,cars3[,31:32]) 
 ```
