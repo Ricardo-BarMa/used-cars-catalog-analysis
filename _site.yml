@@ -1,3 +1,4 @@
+---
 name: "Used cars catalog analysis"
 author: "Omega Smith and Ricardo David Barragan Martinez"
 date: "5/14/2021"
@@ -6,3 +7,4 @@ output:
   toc: true
   toc_float: true
   number_sections: true
+---
