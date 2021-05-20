@@ -28,6 +28,7 @@ library(tidyr) #to transform the df(e.g. unite)
 library(corrplot)
 library(RColorBrewer)
 
+library(Tmisc)
 library(ggplot2) #to create graphs
 ```
 
@@ -493,7 +494,7 @@ cars2 <- cbind(cars_PCA, myPr$x[,1:2])
 ```{r ggplot of PCAs,fig.width=13, fig.height=14}
 ggplot(cars2, aes(PC1,PC2, col=manufacturer_name, fill = manufacturer_name)) +
   stat_ellipse(geom = "polygon", col ="black", alpha = 0.5) +
-  geom_point(shape=21,col="black")
+  geom_point(shape=21,col="black") + facet_wrap(~manufacturer_name)
 ```
 
 ## PCA plot of PC1 and PC2 and the transmission options
@@ -559,10 +560,10 @@ cars3 <- cbind(cars_PCA, myPr2$x[,1:2])
 
 ## PCA plot of PC1 and PC2 and the manufacturer names options without features
 
-```{r ggplot of PCAs without features ,fig.width=13, fig.height=14}
+```{r ggplot of PCAs without features ,fig.width=24, fig.height=14}
 ggplot(cars3, aes(PC1,PC2, col=manufacturer_name, fill = manufacturer_name)) +
   stat_ellipse(geom = "polygon", col ="black", alpha = 0.4) +
-  geom_point(shape=21,col="black")
+  geom_point(shape=21,col="black") + facet_wrap(~manufacturer_name)
 ```
 
 ## PCA plot of PC1 and PC2 and the transmission options without features
